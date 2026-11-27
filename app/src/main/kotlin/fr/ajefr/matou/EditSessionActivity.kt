@@ -73,6 +73,8 @@ class EditSessionActivity : Activity() {
         v<CheckBox>(R.id.backspace).isChecked = profile.backspaceCtrlH
         v<CheckBox>(R.id.legacy).isChecked = profile.legacyAlgorithms
         updateKeyStatus()
+        PasswordToggle.attach(v(R.id.password))
+        PasswordToggle.attach(v(R.id.passphrase))
 
         v<Button>(R.id.pickKey).setOnClickListener {
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

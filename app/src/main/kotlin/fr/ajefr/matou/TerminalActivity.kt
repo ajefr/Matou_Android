@@ -238,10 +238,10 @@ class TerminalActivity : Activity(), Prompter {
 
     override fun askSecret(title: String, message: String): String? = onUi<String?>(null) { _, done ->
         val input = EditText(this).apply {
-            inputType = if (title == "Utilisateur") InputType.TYPE_CLASS_TEXT
-            else InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            inputType = InputType.TYPE_CLASS_TEXT
             isSingleLine = true
         }
+        if (title != "Utilisateur") PasswordToggle.attach(input)
         val box = LinearLayout(this).apply {
             val pad = (20 * resources.displayMetrics.density).toInt()
             setPadding(pad, 0, pad, 0)
