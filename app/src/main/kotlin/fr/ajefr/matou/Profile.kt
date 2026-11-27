@@ -42,6 +42,8 @@ data class Profile(
     var legacyAlgorithms: Boolean = false,
     var termType: String = "xterm-256color",
     var backspaceCtrlH: Boolean = false,
+    /** Glissement vertical : true = envoie ↑/↓ (historique du shell), false = défile dans le terminal. */
+    var swipeSendsArrows: Boolean = false,
     var theme: String = Themes.DEFAULT.name,
     var fontSize: Float = 13f,
     var lastUsed: Long = 0,
@@ -62,7 +64,7 @@ data class Profile(
         put("keyPassphraseEnc", keyPassphraseEnc); put("startupCommands", startupCommands)
         put("loginPrompt", loginPrompt); put("passwordPrompt", passwordPrompt); put("forwards", forwards)
         put("keepAliveSec", keepAliveSec); put("legacyAlgorithms", legacyAlgorithms); put("termType", termType)
-        put("backspaceCtrlH", backspaceCtrlH); put("theme", theme); put("fontSize", fontSize.toDouble())
+        put("backspaceCtrlH", backspaceCtrlH); put("swipeSendsArrows", swipeSendsArrows); put("theme", theme); put("fontSize", fontSize.toDouble())
         put("lastUsed", lastUsed)
     }
 
@@ -85,6 +87,7 @@ data class Profile(
             legacyAlgorithms = o.optBoolean("legacyAlgorithms"),
             termType = o.optString("termType", "xterm-256color"),
             backspaceCtrlH = o.optBoolean("backspaceCtrlH"),
+            swipeSendsArrows = o.optBoolean("swipeSendsArrows"),
             theme = o.optString("theme", Themes.DEFAULT.name),
             fontSize = o.optDouble("fontSize", 13.0).toFloat(),
             lastUsed = o.optLong("lastUsed"),

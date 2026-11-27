@@ -56,7 +56,7 @@ class TerminalActivity : Activity(), Prompter {
         terminalView = TerminalView(this)
         root.addView(terminalView, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
 
-        extraKeys = ExtraKeysView(this, { terminalView.sendKey(it, 0) }, { terminalView.sendText(it) })
+        extraKeys = ExtraKeysView(this, { terminalView.sendKey(it, 0) }, { terminalView.sendText(it) }, { toggleSwipeMode() })
         root.addView(extraKeys, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
         terminalView.extraModifiers = { extraKeys.modifiers }
@@ -128,7 +128,19 @@ class TerminalActivity : Activity(), Prompter {
         SessionManager.current = index
         if (terminalView.session !== s) terminalView.session = s
         s.onUpdate = { terminalView.invalidate(); refreshTabs() }
+        extraKeys.setSwipeMode(s.profile.swipeSendsArrows)
         refreshTabs()
+    }
+
+    /** Bascule le glissement vertical entre historique du shell (↑/↓) et défilement du terminal. */
+    private fun toggleSwipeMode() {
+        val s = currentSession() ?: return
+        s.profile.swipeSendsArrows = !s.profile.swipeSendsArrows
+        extraKeys.setSwipeMode(s.profile.swipeSendsArrows)
+        Toast.makeText(this,
+            if (s.profile.swipeSendsArrows) "Glisser : historique des commandes (↑/↓)" else "Glisser : défilement du terminal",
+            Toast.LENGTH_SHORT).show()
+        saveProfileSettings(s)
     }
 
     private var tabSignature = ""
@@ -160,7 +172,7 @@ class TerminalActivity : Activity(), Prompter {
             }
             tabRow.addView(tab, LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT))
         }
-        if (terminalView.session !== currentSession()) currentSession()?.let { terminalView.session = it; it.onUpdate = { terminalView.invalidate(); refreshTabs() } }
+        if (terminalView.session !== currentSession()) currentSession()?.let { terminalView.session = it; it.onUpdate = { terminalView.invalidate(); refreshTabs() }; extraKeys.setSwipeMode(it.profile.swipeSendsArrows) }
     }
 
     private fun confirmClose(s: TerminalSession) {
@@ -213,6 +225,7 @@ class TerminalActivity : Activity(), Prompter {
         val saved = store.get(s.profile.id) ?: return
         saved.theme = s.profile.theme
         saved.fontSize = s.profile.fontSize
+        saved.swipeSendsArrows = s.profile.swipeSendsArrows
         store.upsert(saved)
     }
 

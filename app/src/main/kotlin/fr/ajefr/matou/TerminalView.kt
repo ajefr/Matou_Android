@@ -310,7 +310,10 @@ class TerminalView(context: Context) : View(context) {
 
     // ---------------------------------------------------------------- Toucher
     private val gestures = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-        override fun onDown(e: MotionEvent) = true
+        override fun onDown(e: MotionEvent): Boolean {
+            scrollRemainder = 0f
+            return true
+        }
 
         override fun onSingleTapUp(e: MotionEvent): Boolean {
             if (actionMode != null) { clearSelection(); return true }
@@ -328,10 +331,13 @@ class TerminalView(context: Context) : View(context) {
         override fun onScroll(e1: MotionEvent?, e2: MotionEvent, dx: Float, dy: Float): Boolean {
             val s = session ?: return true
             val t = s.terminal
+            val arrows = s.profile.swipeSendsArrows
+            // En mode historique, un pas plus long évite d'envoyer trop de flèches d'un coup.
+            val step = if (arrows) cellH * 2 else cellH
             scrollRemainder += dy
-            val lines = (scrollRemainder / cellH).toInt()
+            val lines = (scrollRemainder / step).toInt()
             if (lines == 0) return true
-            scrollRemainder -= lines * cellH
+            scrollRemainder -= lines * step
             val (col, row) = cellAt(e2)
             synchronized(t) {
                 when {
@@ -340,8 +346,9 @@ class TerminalView(context: Context) : View(context) {
                         val seq = t.encodeMouse(btn, col, row, true) ?: ""
                         repeat(abs(lines)) { s.writeText(seq) }
                     }
-                    t.isAltScreen -> {
-                        // less, vim, man… : on envoie des flèches
+                    t.isAltScreen || (arrows && scrollOffset == 0) -> {
+                        // less, vim, man… ou mode « historique » : on envoie des flèches.
+                        // Doigt vers le bas = ↑ (commande précédente), vers le haut = ↓.
                         val k = KeyEncoder.encode(if (lines > 0) Key.DOWN else Key.UP, 0, t.appCursorKeys)
                         repeat(abs(lines)) { s.writeText(k) }
                     }

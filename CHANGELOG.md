@@ -6,6 +6,10 @@ All notable changes to Matou are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Swipe mode: vertical swipes either scroll the terminal or browse the shell command history (↑/↓),
+  switchable with a new **⇅** button in the extra keys bar and saved per session
+
 ## [0.1.0] - 2026-11-27
 
 First prototype.

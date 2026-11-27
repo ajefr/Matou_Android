@@ -12,13 +12,25 @@ import fr.ajefr.matou.core.Key
 import fr.ajefr.matou.core.KeyEncoder
 
 /** Barre de touches absentes des claviers tactiles : Échap, Ctrl, Alt, Tab, flèches, F1-F12… */
-class ExtraKeysView(context: Context, private val onKey: (Key) -> Unit, private val onText: (String) -> Unit) :
+class ExtraKeysView(
+    context: Context,
+    private val onKey: (Key) -> Unit,
+    private val onText: (String) -> Unit,
+    private val onSwipeToggle: () -> Unit,
+) :
     HorizontalScrollView(context) {
 
     private var ctrl = 0      // 0 = off, 1 = une fois, 2 = verrouillé
     private var alt = 0
     private lateinit var ctrlView: TextView
     private lateinit var altView: TextView
+    private lateinit var swipeView: TextView
+
+    /** Affiche le mode du glissement vertical : historique (↑/↓) ou défilement du terminal. */
+    fun setSwipeMode(arrows: Boolean) {
+        swipeView.text = if (arrows) "⇅ Hist." else "⇅ Défil."
+        swipeView.setBackgroundColor(if (arrows) 0xFF3A5A40.toInt() else 0)
+    }
 
     val modifiers: Int
         get() = (if (ctrl > 0) KeyEncoder.CTRL else 0) or (if (alt > 0) KeyEncoder.ALT else 0)
@@ -49,6 +61,7 @@ class ExtraKeysView(context: Context, private val onKey: (Key) -> Unit, private 
                 row.addView(this)
             }
         }
+        swipeView = button("⇅ Défil.", { onSwipeToggle() })
         button("Échap", { onKey(Key.ESCAPE) })
         ctrlView = button("Ctrl", { ctrl = if (ctrl == 0) 1 else 0; refresh() }, { ctrl = 2; refresh() })
         altView = button("Alt", { alt = if (alt == 0) 1 else 0; refresh() }, { alt = 2; refresh() })
