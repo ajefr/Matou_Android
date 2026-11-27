@@ -133,4 +133,57 @@
         <item quantity="other">%1$d open sessions</item>
     </plurals>
     <string name="notif_quit">Quit</string>
+
+    <!-- File transfer -->
+    <string name="menu_files">Files (SFTP / SCP)</string>
+    <string name="files_title">Files: %1$s</string>
+    <string name="files_not_connected">Connect the SSH session first.</string>
+    <string name="files_loading">Loading…</string>
+    <string name="files_empty">Empty folder</string>
+    <string name="files_error">Error: %1$s</string>
+    <string name="files_open">Open</string>
+    <string name="files_download">Download</string>
+    <string name="files_upload">Upload files…</string>
+    <string name="files_rename">Rename</string>
+    <string name="files_copy_path">Copy path</string>
+    <string name="files_new_folder">New folder</string>
+    <string name="files_refresh">Refresh</string>
+    <string name="files_go_to">Go to folder</string>
+    <string name="files_show_hidden">Show hidden files</string>
+    <string name="files_delete_dir_note">Only empty folders can be deleted.</string>
+    <string name="files_downloading">Downloading %1$s</string>
+    <string name="files_downloaded">%1$s downloaded</string>
+    <plurals name="files_uploading">
+        <item quantity="one">Uploading %1$d file</item>
+        <item quantity="other">Uploading %1$d files</item>
+    </plurals>
+    <plurals name="files_uploaded">
+        <item quantity="one">%1$d file uploaded</item>
+        <item quantity="other">%1$d files uploaded</item>
+    </plurals>
+    <string name="files_cancelled">Transfer cancelled</string>
+    <string name="sftp_unavailable_title">SFTP not available</string>
+    <string name="sftp_unavailable_message">The server refused SFTP (%1$s). Many routers and small devices only support SCP.</string>
+    <string name="scp_use">Use SCP</string>
+    <string name="scp_mode">SCP mode</string>
+    <string name="scp_explain">SCP cannot list folders: type the path of the file to download, or the folder to upload into.</string>
+    <string name="scp_download">Download a file…</string>
+    <string name="scp_upload">Upload files…</string>
+    <string name="scp_remote_file">Remote file path</string>
+    <string name="scp_remote_dir">Remote folder (. = home)</string>
+
+    <!-- Session logging -->
+    <string name="section_logging">Session logging</string>
+    <string name="log_mode_off">No logging</string>
+    <string name="log_mode_text">Printable output (text, without escape codes)</string>
+    <string name="log_mode_raw">All session output (raw)</string>
+    <string name="log_choose_folder">Log folder…</string>
+    <string name="log_folder_is">Log folder: %1$s</string>
+    <string name="menu_log_start">Start logging…</string>
+    <string name="menu_log_stop">Stop logging</string>
+    <string name="log_start_title">Log to %1$s</string>
+    <string name="log_started">Logging to %1$s (%2$s)</string>
+    <string name="log_stopped">Logging stopped: %1$s</string>
+    <string name="log_failed">Logging failed: %1$s</string>
+    <string name="log_create_failed">cannot create the log file</string>
 </resources>

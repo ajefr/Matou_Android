@@ -196,7 +196,9 @@ class TerminalActivity : Activity(), Prompter {
         Themes.all.forEachIndexed { i, t -> themes.add(1, 100 + i, i, t.label(this)) }
         m.add(0, 7, 6, R.string.menu_bigger)
         m.add(0, 8, 7, R.string.menu_smaller)
-        m.add(0, 9, 8, R.string.menu_close_tab)
+        if (s.profile.protocol == Protocol.SSH) m.add(0, 10, 8, R.string.menu_files).isEnabled = s.sshSession() != null
+        m.add(0, 11, 9, if (s.logger != null) R.string.menu_log_stop else R.string.menu_log_start)
+        m.add(0, 9, 10, R.string.menu_close_tab)
         pm.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 1 -> terminalView.paste()
@@ -207,6 +209,8 @@ class TerminalActivity : Activity(), Prompter {
                 7 -> terminalView.setFontSize(terminalView.fontSize + 1)
                 8 -> terminalView.setFontSize(terminalView.fontSize - 1)
                 9 -> confirmClose(s)
+                10 -> startActivity(Intent(this, FilesActivity::class.java).putExtra(FilesActivity.EXTRA_SESSION, s.id))
+                11 -> if (s.logger != null) s.stopLogging() else chooseLogMode(s)
                 in 100 until 100 + Themes.all.size -> {
                     val t = Themes.all[item.itemId - 100]
                     s.profile.theme = t.name
@@ -218,6 +222,35 @@ class TerminalActivity : Activity(), Prompter {
             true
         }
         pm.show()
+    }
+
+    /** Démarre un journal : texte lisible ou sortie brute, comme dans PuTTY / KiTTY. */
+    private fun chooseLogMode(s: TerminalSession) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.log_start_title, LogFolder.describe(this)))
+            .setItems(arrayOf(getString(R.string.log_mode_text), getString(R.string.log_mode_raw))) { _, which ->
+                s.startLogging(if (which == 0) SessionLogger.MODE_TEXT else SessionLogger.MODE_RAW)
+                terminalView.invalidate()
+            }
+            .setNeutralButton(R.string.log_choose_folder) { _, _ ->
+                pendingLogSession = s
+                @Suppress("DEPRECATION")
+                startActivityForResult(LogFolder.pickIntent(), REQ_LOG_FOLDER)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private var pendingLogSession: TerminalSession? = null
+
+    @Deprecated("API Activity simple, suffisante ici")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != REQ_LOG_FOLDER) return
+        val s = pendingLogSession
+        pendingLogSession = null
+        if (resultCode == RESULT_OK) data?.data?.let { runCatching { LogFolder.set(this, it) } }
+        if (s != null && s in SessionManager.sessions) chooseLogMode(s)
     }
 
     /** Enregistre thème et taille de police dans la session sauvegardée correspondante. */
@@ -278,5 +311,6 @@ class TerminalActivity : Activity(), Prompter {
     companion object {
         const val EXTRA_PROFILE_ID = "profile_id"
         const val EXTRA_QUICK = "quick"
+        private const val REQ_LOG_FOLDER = 10
     }
 }

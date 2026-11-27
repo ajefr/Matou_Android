@@ -37,6 +37,10 @@
             android:theme="@style/Theme.Matou.Terminal"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
 
+        <activity
+            android:name=".FilesActivity"
+            android:exported="false" />
+
         <service
             android:name=".ConnectionService"
             android:exported="false"

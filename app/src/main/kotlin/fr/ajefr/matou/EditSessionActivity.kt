@@ -73,6 +73,12 @@ class EditSessionActivity : Activity() {
         v<CheckBox>(R.id.backspace).isChecked = profile.backspaceCtrlH
         v<CheckBox>(R.id.swipeArrows).isChecked = profile.swipeSendsArrows
         v<CheckBox>(R.id.legacy).isChecked = profile.legacyAlgorithms
+        val logMode = v<Spinner>(R.id.logMode)
+        logMode.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,
+            listOf(getString(R.string.log_mode_off), getString(R.string.log_mode_text), getString(R.string.log_mode_raw)))
+        logMode.setSelection(profile.logMode)
+        updateLogFolder()
+        v<Button>(R.id.pickLogFolder).setOnClickListener { startActivityForResult(LogFolder.pickIntent(), REQ_LOG_FOLDER) }
         updateKeyStatus()
         PasswordToggle.attach(v(R.id.password))
         PasswordToggle.attach(v(R.id.passphrase))
@@ -103,6 +109,10 @@ class EditSessionActivity : Activity() {
         v<View>(R.id.telnetBox).visibility = if (p == Protocol.TELNET) View.VISIBLE else View.GONE
     }
 
+    private fun updateLogFolder() {
+        v<TextView>(R.id.logFolder).text = getString(R.string.log_folder_is, LogFolder.describe(this))
+    }
+
     private fun keyDir() = File(filesDir, "keys").apply { mkdirs() }
 
     private fun updateKeyStatus() {
@@ -120,6 +130,11 @@ class EditSessionActivity : Activity() {
     @Deprecated("API Activity simple, suffisante ici")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_LOG_FOLDER) {
+            if (resultCode == RESULT_OK) data?.data?.let { runCatching { LogFolder.set(this, it) } }
+            updateLogFolder()
+            return
+        }
         if (requestCode != REQ_KEY || resultCode != RESULT_OK) return
         val uri = data?.data ?: return
         runCatching {
@@ -185,6 +200,7 @@ class EditSessionActivity : Activity() {
             backspaceCtrlH = v<CheckBox>(R.id.backspace).isChecked
             swipeSendsArrows = v<CheckBox>(R.id.swipeArrows).isChecked
             legacyAlgorithms = v<CheckBox>(R.id.legacy).isChecked
+            logMode = v<Spinner>(R.id.logMode).selectedItemPosition.coerceIn(0, 2)
             theme = Themes.all[v<Spinner>(R.id.theme).selectedItemPosition].name
         }
         store.upsert(profile)
@@ -194,5 +210,6 @@ class EditSessionActivity : Activity() {
     companion object {
         const val EXTRA_ID = "id"
         private const val REQ_KEY = 1
+        private const val REQ_LOG_FOLDER = 2
     }
 }

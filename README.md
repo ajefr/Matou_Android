@@ -27,7 +27,7 @@ routers and embedded boards, Matou brings that workflow to your phone: a list of
 connect, credentials and keys stored safely, commands sent automatically on login, and a terminal
 that renders `vim`, `htop`, `tmux` and `mc` correctly.
 
-> **Status:** early prototype (v0.1.1).
+> **Status:** early prototype (v0.2.0).
 >
 > **Independent project.** Matou takes its ideas from KiTTY, but it is a separate application
 > written from scratch in Kotlin. It shares no code with KiTTY or PuTTY and is not affiliated with,
@@ -63,6 +63,8 @@ that renders `vim`, `htop`, `tmux` and `mc` correctly.
 | In-app ed25519 key generation | ✅ | — | — |
 | Host key verification (`known_hosts`) | ✅ | — | — |
 | Local & remote port forwarding | ✅ | — | — |
+| File transfer (SFTP, SCP fallback) | ✅ | — | — |
+| Session logging (text or raw) | ✅ | ✅ | ✅ |
 | Startup commands | ✅ | ✅ | ✅ |
 | Window size (pty / NAWS) | ✅ | ✅ | — |
 | Keep-alive | ✅ | TCP | TCP |
@@ -117,8 +119,6 @@ See the **[User guide](docs/USER_GUIDE.md)** for keys, port forwarding, Telnet a
 ## Roadmap
 
 - USB serial (FTDI, CP210x, CH340) for console cables
-- Session logging to a file
-- SFTP / SCP file transfer
 - Jump hosts and SOCKS/HTTP proxies, dynamic (SOCKS) forwarding
 - SSH agent and agent forwarding
 - Import sessions from a PuTTY / KiTTY registry export

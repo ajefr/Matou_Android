@@ -36,6 +36,9 @@ des sessions sauvegardées, de l'auto-login, des commandes au démarrage et un v
 - TCP brut
 - Commandes envoyées automatiquement après la connexion (l'« autocommand » de KiTTY)
 - Reconnexion : Entrée après une déconnexion, ou menu « Reconnecter »
+- **Transfert de fichiers SFTP** sur la connexion SSH ouverte (télécharger, envoyer, renommer, supprimer),
+  avec repli **SCP** pour les routeurs et petits appareils sans SFTP
+- **Journal de session** dans un fichier : texte lisible ou sortie brute, à la demande ou à chaque connexion
 
 **Terminal**
 - Émulation xterm : 256 couleurs et truecolor, gras/italique/souligné/inverse, écran alternatif (vim, htop, less),
@@ -69,7 +72,7 @@ La CI GitHub Actions compile l'APK à chaque push et le publie comme artefact (`
 
 ## Pistes
 
-Port série USB, journalisation de session dans un fichier, transfert SFTP/SCP, agent SSH, proxy (SOCKS/HTTP/saut
+Port série USB, agent SSH, proxy (SOCKS/HTTP/saut
 SSH), redirection dynamique (SOCKS), import des sessions depuis le registre PuTTY/KiTTY.
 
 ## Licence

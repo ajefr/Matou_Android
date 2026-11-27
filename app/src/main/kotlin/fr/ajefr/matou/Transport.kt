@@ -37,7 +37,9 @@ class SshTransport(
     private val profile: Profile,
     private val prompter: Prompter,
 ) : Transport {
-    private var session: Session? = null
+    /** La session SSH, aussi utilisée pour SFTP / SCP. */
+    @Volatile var session: Session? = null
+        private set
     private var channel: ChannelShell? = null
     private lateinit var input: InputStream
     private lateinit var output: OutputStream

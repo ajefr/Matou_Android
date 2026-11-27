@@ -84,6 +84,16 @@
         <CheckBox android:id="@+id/legacy" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:text="@string/opt_legacy" />
 
+        <TextView style="@style/Section" android:text="@string/section_logging" />
+
+        <Spinner android:id="@+id/logMode" android:layout_width="match_parent" android:layout_height="48dp" />
+
+        <TextView android:id="@+id/logFolder" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingStart="4dp" android:paddingEnd="4dp" android:alpha="0.7" android:textSize="13sp" />
+
+        <Button android:id="@+id/pickLogFolder" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/log_choose_folder" />
+
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:paddingTop="16dp">
             <Button android:id="@+id/save" android:layout_width="0dp" android:layout_weight="1"
