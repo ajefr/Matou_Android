@@ -27,11 +27,24 @@ routers and embedded boards, Matou brings that workflow to your phone: a list of
 connect, credentials and keys stored safely, commands sent automatically on login, and a terminal
 that renders `vim`, `htop`, `tmux` and `mc` correctly.
 
-> **Status:** early prototype (v0.1).
+> **Status:** early prototype (v0.1.1).
 >
 > **Independent project.** Matou takes its ideas from KiTTY, but it is a separate application
 > written from scratch in Kotlin. It shares no code with KiTTY or PuTTY and is not affiliated with,
 > endorsed by or supported by their authors. Please report Matou issues here, not to them.
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/01-sessions.png" width="200" alt="Saved sessions">
+  <img src="docs/screenshots/02-terminal.png" width="200" alt="Terminal with colors and tabs">
+  <img src="docs/screenshots/03-htop.png" width="200" alt="htop in the Dracula theme">
+</p>
+<p align="center">
+  <img src="docs/screenshots/04-putty-theme.png" width="200" alt="PuTTY classic theme">
+  <img src="docs/screenshots/05-editor.png" width="200" alt="Session editor">
+  <img src="docs/screenshots/06-editor-fr.png" width="200" alt="Session editor in French">
+</p>
 
 ## Features
 
@@ -40,6 +53,7 @@ that renders `vim`, `htop`, `tmux` and `mc` correctly.
 - **Quick connect**: type `user@host:port`, `ssh://…`, `telnet://…` or `raw://…`
 - Edit, **duplicate** and delete sessions; duplicate an open session into a new tab
 - Passwords and key passphrases **encrypted with the Android Keystore** (AES-256-GCM)
+- **Quit** from the session list or the notification: closes every connection at once
 
 ### Protocols
 | | SSH | Telnet | Raw TCP |
@@ -67,6 +81,7 @@ that renders `vim`, `htop`, `tmux` and `mc` correctly.
 - **Extra keys bar**: Esc, Ctrl, Alt (sticky or locked), Tab, arrows, Home/End, PgUp/PgDn, F1–F12, symbols
 - **Tabs**, 8 built-in **themes** (including *PuTTY classic*, Solarized, Dracula, Gruvbox, Nord)
 - A foreground service keeps connections alive while the app is in the background
+- Interface in **English and French**, following the phone's language
 
 ## Install
 

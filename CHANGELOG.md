@@ -11,6 +11,9 @@ All notable changes to Matou are documented here. The format follows
 ### Added
 - Swipe mode: vertical swipes either scroll the terminal or browse the shell command history (↑/↓),
   switchable with a new **⇅** button in the extra keys bar and saved per session
+- Bilingual interface: English and French, following the phone's language (per-app language on Android 13+)
+- **Quit** in the session list menu and in the notification: closes every connection and exits the app
+- Screenshots in the README, rendered by a Robolectric test (`MATOU_SCREENSHOTS=$PWD/docs/screenshots ./gradlew :app:testDebugUnitTest`)
 
 ## 0.1.0 - 2026-11-27
 

@@ -54,7 +54,7 @@
     <string name="key_import">Importer…</string>
     <string name="key_generate">Générer</string>
     <string name="key_remove">Retirer</string>
-    <string name="hint_passphrase">Phrase de passe (vide = demander)</string>
+    <string name="hint_passphrase">Phrase secrète (vide = demander)</string>
     <string name="key_unreadable">Clé illisible : %1$s</string>
     <string name="key_too_big">fichier trop gros pour une clé</string>
     <string name="key_generated_title">Clé ed25519 générée</string>
