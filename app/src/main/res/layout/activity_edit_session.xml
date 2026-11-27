@@ -78,6 +78,9 @@
         <CheckBox android:id="@+id/backspace" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:text="Retour arrière envoie Ctrl+H (au lieu de DEL)" />
 
+        <CheckBox android:id="@+id/swipeArrows" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Glisser le doigt parcourt l'historique des commandes (↑/↓) au lieu de faire défiler le terminal" />
+
         <CheckBox android:id="@+id/legacy" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:text="Autoriser les anciens algorithmes SSH (ssh-rsa SHA-1, CBC)" />
 

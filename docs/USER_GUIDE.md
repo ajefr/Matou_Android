@@ -51,6 +51,7 @@ The home screen lists your saved sessions, most recently used first.
 | Terminal type | Value of `$TERM` announced to the server (default `xterm-256color`). |
 | Keep-alive | Seconds between SSH keep-alive messages. `0` disables them. |
 | Backspace sends Ctrl+H | For servers or devices that expect `^H` instead of `DEL` (`^?`). |
+| Swipe browses command history | Default [swipe mode](#swipe-mode) for this session. |
 | Legacy SSH algorithms | Enables ssh-rsa (SHA-1), DSA, CBC ciphers and SHA-1 key exchanges. |
 
 ### Quick connect
@@ -156,16 +157,30 @@ sudo -i
 | Gesture | Effect |
 |---|---|
 | Tap | Show the keyboard. In mouse-aware apps (htop, mc, tmux), also sends a click. |
-| Swipe up / down | Scroll the history. In full-screen apps (less, man, vim), sends arrow keys. In mouse-aware apps, sends wheel events. |
+| Swipe up / down | Depends on the swipe mode (see below). In full-screen apps (less, man, vim), always sends arrow keys. In mouse-aware apps, sends wheel events. |
 | Pinch | Change the font size (saved in the session). |
 | Long-press, then drag | Select text. Release to get **Copier / Coller / Tout copier** (copy / paste / copy all). |
 | Tap during a selection | Cancel it. |
+
+### Swipe mode
+
+Vertical swipes on the shell prompt can do one of two things:
+
+| Mode | Button label | Swipe down | Swipe up |
+|---|---|---|---|
+| Scroll (default) | **⇅ Défil.** | Scroll back through the terminal output | Scroll forward |
+| History | **⇅ Hist.** (green) | ↑: previous command in the shell history | ↓: next command |
+
+Tap the **⇅** button at the start of the extra keys bar to switch modes. The choice is saved in the
+session; you can also set it in the session editor (*Glisser le doigt parcourt l'historique des
+commandes*).
 
 ### Extra keys bar
 
 | Key | Behavior |
 |---|---|
 | **Ctrl**, **Alt** | Tap: applies to the next key only (highlighted). Long-press: locked (orange) until tapped again. |
+| **⇅ Défil. / ⇅ Hist.** | Switch the [swipe mode](#swipe-mode) |
 | **Échap** | Esc |
 | **Tab**, arrows, **Début** / **Fin**, **PgPréc** / **PgSuiv**, **Suppr** | Tab, arrows, Home / End, Page Up / Down, Delete |
 | `\| - / ~ \ * & > < :` | Symbols that are awkward to reach on touch keyboards |

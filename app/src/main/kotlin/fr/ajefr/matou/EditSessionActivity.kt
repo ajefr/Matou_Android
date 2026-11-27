@@ -71,6 +71,7 @@ class EditSessionActivity : Activity() {
         v<EditText>(R.id.fontSize).setText(profile.fontSize.toString())
         v<EditText>(R.id.keepAlive).setText(profile.keepAliveSec.toString())
         v<CheckBox>(R.id.backspace).isChecked = profile.backspaceCtrlH
+        v<CheckBox>(R.id.swipeArrows).isChecked = profile.swipeSendsArrows
         v<CheckBox>(R.id.legacy).isChecked = profile.legacyAlgorithms
         updateKeyStatus()
         PasswordToggle.attach(v(R.id.password))
@@ -182,6 +183,7 @@ class EditSessionActivity : Activity() {
             fontSize = v<EditText>(R.id.fontSize).text.toString().toFloatOrNull()?.coerceIn(6f, 40f) ?: 13f
             keepAliveSec = v<EditText>(R.id.keepAlive).text.toString().toIntOrNull() ?: 30
             backspaceCtrlH = v<CheckBox>(R.id.backspace).isChecked
+            swipeSendsArrows = v<CheckBox>(R.id.swipeArrows).isChecked
             legacyAlgorithms = v<CheckBox>(R.id.legacy).isChecked
             theme = Themes.all[v<Spinner>(R.id.theme).selectedItemPosition].name
         }

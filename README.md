@@ -62,7 +62,7 @@ that renders `vim`, `htop`, `tmux` and `mc` correctly.
 - Alternate screen, scroll regions, insert/delete, tab stops, DEC line drawing, wide characters (CJK, emoji)
 - Window title (OSC 0/2), palette queries (OSC 4/10/11), **clipboard** (OSC 52), bracketed paste
 - **Mouse reporting** (X10 and SGR), so taps and scrolls work in `htop`, `mc`, `tmux`, `vim`
-- 5,000-line scrollback, finger scrolling, **pinch to zoom**
+- 5,000-line scrollback, **pinch to zoom**, and a swipe mode switch: scroll the output or browse the command history
 - **Selection** with long-press and drag, copy / paste / copy all
 - **Extra keys bar**: Esc, Ctrl, Alt (sticky or locked), Tab, arrows, Home/End, PgUp/PgDn, F1–F12, symbols
 - **Tabs**, 8 built-in **themes** (including *PuTTY classic*, Solarized, Dracula, Gruvbox, Nord)
