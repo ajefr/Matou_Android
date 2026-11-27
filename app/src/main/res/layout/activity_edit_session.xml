@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView style="@style/Section" android:text="Session" />
+
+        <EditText android:id="@+id/name" style="@style/Field" android:hint="Nom (facultatif)" android:inputType="text" />
+
+        <Spinner android:id="@+id/protocol" android:layout_width="match_parent" android:layout_height="48dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <EditText android:id="@+id/host" style="@style/Field" android:layout_width="0dp" android:layout_weight="3"
+                android:hint="Hôte ou adresse IP" android:inputType="textUri" />
+            <EditText android:id="@+id/port" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
+                android:hint="Port" android:inputType="number" />
+        </LinearLayout>
+
+        <EditText android:id="@+id/username" style="@style/Field" android:hint="Utilisateur" android:inputType="text" />
+
+        <EditText android:id="@+id/password" style="@style/Field" android:hint="Mot de passe (vide = demander)"
+            android:inputType="textPassword" />
+
+        <TextView style="@style/Section" android:text="Clé privée (SSH)" />
+
+        <TextView android:id="@+id/keyStatus" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Aucune clé" android:paddingBottom="4dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <Button android:id="@+id/pickKey" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="Importer…" />
+            <Button android:id="@+id/genKey" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="Générer" />
+            <Button android:id="@+id/removeKey" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="Retirer" />
+        </LinearLayout>
+
+        <EditText android:id="@+id/passphrase" style="@style/Field" android:hint="Phrase de passe (vide = demander)"
+            android:inputType="textPassword" />
+
+        <TextView style="@style/Section" android:text="Automatisation" />
+
+        <EditText android:id="@+id/startup" style="@style/Field" android:gravity="top"
+            android:hint="Commandes au démarrage (une par ligne)" android:inputType="textMultiLine" android:minLines="2" />
+
+        <LinearLayout android:id="@+id/telnetBox" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/loginPrompt" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
+                android:hint="Invite login" android:inputType="text" />
+            <EditText android:id="@+id/passwordPrompt" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
+                android:hint="Invite mot de passe" android:inputType="text" />
+        </LinearLayout>
+
+        <TextView android:id="@+id/forwardsTitle" style="@style/Section" android:text="Redirections de ports (SSH)" />
+
+        <EditText android:id="@+id/forwards" style="@style/Field" android:gravity="top" android:typeface="monospace"
+            android:hint="L 8080:localhost:80&#10;R 2222:localhost:22" android:inputType="textMultiLine" android:minLines="2" />
+
+        <TextView style="@style/Section" android:text="Terminal et connexion" />
+
+        <Spinner android:id="@+id/theme" android:layout_width="match_parent" android:layout_height="48dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <EditText android:id="@+id/termType" style="@style/Field" android:layout_width="0dp" android:layout_weight="2"
+                android:hint="Type de terminal" android:inputType="text" />
+            <EditText android:id="@+id/fontSize" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
+                android:hint="Police (sp)" android:inputType="numberDecimal" />
+            <EditText android:id="@+id/keepAlive" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
+                android:hint="Keepalive (s)" android:inputType="number" />
+        </LinearLayout>
+
+        <CheckBox android:id="@+id/backspace" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Retour arrière envoie Ctrl+H (au lieu de DEL)" />
+
+        <CheckBox android:id="@+id/legacy" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Autoriser les anciens algorithmes SSH (ssh-rsa SHA-1, CBC)" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:paddingTop="16dp">
+            <Button android:id="@+id/save" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="Enregistrer" />
+            <Button android:id="@+id/saveConnect" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="Enregistrer et ouvrir" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

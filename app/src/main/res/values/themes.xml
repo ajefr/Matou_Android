@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Matou" parent="android:Theme.DeviceDefault">
+        <item name="android:colorAccent">#FFB86C</item>
+        <item name="android:colorPrimary">#1E1E28</item>
+        <item name="android:colorPrimaryDark">#14141C</item>
+        <item name="android:windowBackground">#16161E</item>
+        <item name="android:navigationBarColor">#16161E</item>
+        <item name="android:statusBarColor">#14141C</item>
+    </style>
+
+    <style name="Theme.Matou.Terminal" parent="Theme.Matou">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>
