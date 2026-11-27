@@ -6,13 +6,15 @@ All notable changes to Matou are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-27
+
 ### Added
 - Swipe mode: vertical swipes either scroll the terminal or browse the shell command history (↑/↓),
   switchable with a new **⇅** button in the extra keys bar and saved per session
 
-## [0.1.0] - 2026-11-27
+## 0.1.0 - 2026-11-27
 
-First prototype.
+First prototype (not published as a release; included in 0.1.1).
 
 ### Added
 - Saved sessions (SSH, Telnet, raw TCP) with edit, duplicate, delete and quick connect
@@ -30,5 +32,5 @@ First prototype.
 
 
 
-[Unreleased]: https://github.com/ajefr/Matou_Android/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/ajefr/Matou_Android/releases/tag/v0.1.0
+[Unreleased]: https://github.com/ajefr/Matou_Android/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/ajefr/Matou_Android/releases/tag/v0.1.1
