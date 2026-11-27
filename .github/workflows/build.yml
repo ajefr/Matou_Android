@@ -1,0 +1,56 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEY: ${{ secrets.MATOU_KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      # Les runners ubuntu-latest embarquent déjà le SDK Android (ANDROID_HOME)
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Tests du cœur et APK debug
+        run: ./gradlew :core:test assembleDebug
+
+      # La clé de signature vient des secrets du dépôt (absents pour les PR de forks).
+      - name: Restaurer la clé de signature
+        if: env.HAS_KEY == 'true'
+        env:
+          KEYSTORE_B64: ${{ secrets.MATOU_KEYSTORE_BASE64 }}
+        run: echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/matou-release.p12"
+
+      - name: APK release signé
+        if: env.HAS_KEY == 'true'
+        env:
+          MATOU_KEYSTORE_PATH: ${{ runner.temp }}/matou-release.p12
+          MATOU_KEYSTORE_PASSWORD: ${{ secrets.MATOU_KEYSTORE_PASSWORD }}
+          MATOU_KEY_ALIAS: ${{ secrets.MATOU_KEY_ALIAS }}
+          MATOU_KEY_PASSWORD: ${{ secrets.MATOU_KEY_PASSWORD }}
+        run: |
+          ./gradlew assembleRelease
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          "$BT/apksigner" verify --print-certs app/build/outputs/apk/release/app-release.apk | head -3
+          rm -f "$RUNNER_TEMP/matou-release.p12"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: matou-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ hashFiles('app/build/outputs/apk/release/app-release.apk') != '' }}
+        with:
+          name: matou-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
