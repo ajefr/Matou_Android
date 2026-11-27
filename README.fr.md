@@ -5,7 +5,9 @@
 Client SSH / Telnet pour Android dans l'esprit de [KiTTY](https://github.com/cyd01/KiTTY) (le PuTTY amélioré) :
 des sessions sauvegardées, de l'auto-login, des commandes au démarrage et un vrai émulateur xterm.
 
-> Prototype (v0.1). Projet original, non affilié à PuTTY ni à KiTTY.
+> Prototype (v0.1). **Inspiré de [KiTTY](https://github.com/cyd01/KiTTY)** (le fork de PuTTY), Matou est un
+> projet indépendant écrit de zéro en Kotlin : il ne partage aucun code avec KiTTY ni PuTTY et n'est
+> ni affilié ni soutenu par leurs auteurs.
 
 ## Fonctionnalités
 

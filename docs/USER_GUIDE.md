@@ -1,5 +1,9 @@
 # Matou user guide
 
+Matou is an Android SSH / Telnet client inspired by [KiTTY](https://github.com/cyd01/KiTTY), the
+PuTTY fork. If you know KiTTY, you will recognize saved sessions, auto-login and startup commands
+(KiTTY's *autocommand*). Matou is an independent project, not affiliated with KiTTY or PuTTY.
+
 > The app's interface is currently in French. This guide quotes the labels as they appear on screen,
 > with their meaning in English (an English translation of the interface is planned).
 
