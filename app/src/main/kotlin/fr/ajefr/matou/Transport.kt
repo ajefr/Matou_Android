@@ -16,7 +16,7 @@ import java.net.Socket
 /** Questions posées à l'utilisateur pendant la connexion (appelées depuis un thread réseau). */
 interface Prompter {
     fun confirm(title: String, message: String): Boolean
-    fun askSecret(title: String, message: String): String?
+    fun askSecret(title: String, message: String, secret: Boolean = true): String?
     fun info(message: String)
 }
 
@@ -56,7 +56,8 @@ class SshTransport(
         }
 
         val user = profile.username.ifEmpty {
-            prompter.askSecret("Utilisateur", "Nom d'utilisateur pour ${profile.host}") ?: throw Exception("Connexion annulée")
+            prompter.askSecret(context.getString(R.string.prompt_user_title), context.getString(R.string.prompt_user_message, profile.host), secret = false)
+                ?: throw Exception(context.getString(R.string.prompt_cancelled))
         }
         val s = jsch.getSession(user, profile.host, profile.port)
         session = s
@@ -85,8 +86,8 @@ class SshTransport(
             runCatching {
                 if (f.remote) s.setPortForwardingR(f.bindPort, f.host, f.hostPort)
                 else s.setPortForwardingL(f.bindAddress, f.bindPort, f.host, f.hostPort)
-                banner += "Redirection active : $f"
-            }.onFailure { banner += "Échec de la redirection $f : ${it.message}" }
+                banner += context.getString(R.string.forward_active, f.toString())
+            }.onFailure { banner += context.getString(R.string.forward_failed, f.toString(), it.message) }
         }
 
         val ch = s.openChannel("shell") as ChannelShell
@@ -122,16 +123,16 @@ class SshTransport(
 
         override fun promptPassword(message: String): Boolean {
             if (password.isNotEmpty() && !triedSavedPassword) { triedSavedPassword = true; return true }
-            password = prompter.askSecret("Mot de passe", "Mot de passe pour $target") ?: return false
+            password = prompter.askSecret(context.getString(R.string.prompt_password_title), context.getString(R.string.prompt_password_message, target)) ?: return false
             return true
         }
 
         override fun promptPassphrase(message: String): Boolean {
-            passphrase = prompter.askSecret("Clé privée", "Phrase de passe de la clé") ?: return false
+            passphrase = prompter.askSecret(context.getString(R.string.prompt_passphrase_title), context.getString(R.string.prompt_passphrase_message)) ?: return false
             return true
         }
 
-        override fun promptYesNo(message: String) = prompter.confirm("Clé de l'hôte", message)
+        override fun promptYesNo(message: String) = prompter.confirm(context.getString(R.string.prompt_hostkey_title), message)
 
         override fun showMessage(message: String) = prompter.info(message)
 
@@ -144,9 +145,9 @@ class SshTransport(
                 return arrayOf(password)
             }
             return Array(prompt.size) { i ->
-                val title = name.ifBlank { "Authentification" }
+                val title = name.ifBlank { context.getString(R.string.prompt_auth_title) }
                 val msg = listOf(instruction, prompt[i]).filter { it.isNotBlank() }.joinToString("\n")
-                prompter.askSecret(title, msg) ?: return null
+                prompter.askSecret(title, msg, secret = !echo[i]) ?: return null
             }
         }
     }

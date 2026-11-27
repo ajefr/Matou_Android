@@ -1,4 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Matou</string>
+    <string name="app_name" translatable="false">Matou</string>
+
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="copy">Copy</string>
+    <string name="paste">Paste</string>
+    <string name="close">Close</string>
+    <string name="delete">Delete</string>
+    <string name="copied">Copied</string>
+
+    <!-- Protocols -->
+    <string name="proto_ssh">SSH</string>
+    <string name="proto_telnet">Telnet</string>
+    <string name="proto_raw">Raw TCP</string>
+
+    <!-- Themes -->
+    <string name="theme_matou">Matou night</string>
+    <string name="theme_putty">PuTTY classic</string>
+    <string name="theme_solarized_dark">Solarized dark</string>
+    <string name="theme_solarized_light">Solarized light</string>
+    <string name="theme_dracula">Dracula</string>
+    <string name="theme_gruvbox">Gruvbox</string>
+    <string name="theme_nord">Nord</string>
+    <string name="theme_phosphor">Green phosphor</string>
+
+    <!-- Sessions screen -->
+    <string name="sessions_title">Sessions</string>
+    <string name="sessions_empty">No saved sessions yet.\n\nAdd one with ＋ or use quick connect ⚡.</string>
+    <string name="action_open">Open</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_duplicate">Duplicate</string>
+    <string name="copy_suffix">%1$s (copy)</string>
+    <string name="delete_confirm">Delete “%1$s”?</string>
+    <string name="quick_connect">Quick connect</string>
+    <string name="quick_connect_hint">user@host:port  or  telnet://host</string>
+    <string name="connect">Connect</string>
+    <string name="menu_open_sessions">Open (%1$d)</string>
+    <string name="menu_quit">Quit</string>
+    <string name="quit_confirm_title">Quit Matou?</string>
+    <string name="quit_confirm_message">%1$d open session(s) will be disconnected.</string>
+    <string name="quit">Quit</string>
+
+    <!-- Session editor -->
+    <string name="edit_new">New session</string>
+    <string name="edit_edit">Edit session</string>
+    <string name="section_session">Session</string>
+    <string name="hint_name">Name (optional)</string>
+    <string name="hint_host">Host or IP address</string>
+    <string name="hint_port">Port</string>
+    <string name="hint_user">User</string>
+    <string name="hint_password">Password (empty = ask)</string>
+    <string name="section_key">Private key (SSH)</string>
+    <string name="key_none">No key (OpenSSH, PEM or PuTTY .ppk)</string>
+    <string name="key_set">Key: %1$s</string>
+    <string name="key_set_with_pub">Key: %1$s (public key available: long-press to copy)</string>
+    <string name="key_import">Import…</string>
+    <string name="key_generate">Generate</string>
+    <string name="key_remove">Remove</string>
+    <string name="hint_passphrase">Passphrase (empty = ask)</string>
+    <string name="key_unreadable">Unreadable key: %1$s</string>
+    <string name="key_too_big">file too large for a key</string>
+    <string name="key_generated_title">ed25519 key generated</string>
+    <string name="key_generated_message">Add this public key to ~/.ssh/authorized_keys on the server:\n\n%1$s</string>
+    <string name="key_generate_failed">Key generation failed: %1$s</string>
+    <string name="section_automation">Automation</string>
+    <string name="hint_startup">Startup commands (one per line)</string>
+    <string name="hint_login_prompt">Login prompt</string>
+    <string name="hint_password_prompt">Password prompt</string>
+    <string name="section_forwards">Port forwarding (SSH)</string>
+    <string name="section_terminal">Terminal and connection</string>
+    <string name="hint_term_type">Terminal type</string>
+    <string name="hint_font_size">Font (sp)</string>
+    <string name="hint_keepalive">Keep-alive (s)</string>
+    <string name="opt_backspace">Backspace sends Ctrl+H (instead of DEL)</string>
+    <string name="opt_swipe">Swiping browses the command history (↑/↓) instead of scrolling the terminal</string>
+    <string name="opt_legacy">Allow legacy SSH algorithms (ssh-rsa SHA-1, CBC)</string>
+    <string name="save">Save</string>
+    <string name="save_open">Save and open</string>
+    <string name="error_host_required">Host required</string>
+    <string name="error_bad_forward">Invalid line: %1$s</string>
+    <string name="hint_forwards" translatable="false">L 8080:localhost:80\nR 2222:localhost:22</string>
+
+    <!-- Terminal screen -->
+    <string name="menu_copy_history">Copy whole history</string>
+    <string name="menu_duplicate">Duplicate session</string>
+    <string name="menu_reconnect">Reconnect</string>
+    <string name="menu_reset">Reset terminal</string>
+    <string name="menu_theme">Theme</string>
+    <string name="menu_bigger">Larger text</string>
+    <string name="menu_smaller">Smaller text</string>
+    <string name="menu_close_tab">Close tab</string>
+    <string name="close_tab_confirm">Close “%1$s”?</string>
+    <string name="copy_all">Copy all</string>
+    <string name="swipe_history">Swipe: command history (↑/↓)</string>
+    <string name="swipe_scroll">Swipe: scroll the terminal</string>
+    <string name="key_swipe_scroll">⇅ Scroll</string>
+    <string name="key_swipe_history">⇅ Hist.</string>
+    <string name="key_esc">Esc</string>
+    <string name="key_home">Home</string>
+    <string name="key_end">End</string>
+    <string name="key_pgup">PgUp</string>
+    <string name="key_pgdn">PgDn</string>
+    <string name="key_del">Del</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+
+    <!-- Connection -->
+    <string name="term_connecting">%1$s: connecting to %2$s:%3$d…</string>
+    <string name="term_closed_by_host">connection closed by the host</string>
+    <string name="term_disconnected">[Disconnected: %1$s]</string>
+    <string name="term_press_enter">Press Enter to reconnect.</string>
+    <string name="prompt_user_title">User</string>
+    <string name="prompt_user_message">User name for %1$s</string>
+    <string name="prompt_cancelled">Connection cancelled</string>
+    <string name="prompt_password_title">Password</string>
+    <string name="prompt_password_message">Password for %1$s</string>
+    <string name="prompt_passphrase_title">Private key</string>
+    <string name="prompt_passphrase_message">Key passphrase</string>
+    <string name="prompt_hostkey_title">Host key</string>
+    <string name="prompt_auth_title">Authentication</string>
+    <string name="forward_active">Forwarding active: %1$s</string>
+    <string name="forward_failed">Forwarding %1$s failed: %2$s</string>
+
+    <!-- Notification -->
+    <string name="notif_channel">Active connections</string>
+    <plurals name="notif_sessions">
+        <item quantity="one">%1$d open session</item>
+        <item quantity="other">%1$d open sessions</item>
+    </plurals>
+    <string name="notif_quit">Quit</string>
 </resources>

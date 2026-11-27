@@ -14,8 +14,10 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
-enum class Protocol(val label: String, val defaultPort: Int) {
-    SSH("SSH", 22), TELNET("Telnet", 23), RAW("TCP brut", 23)
+enum class Protocol(val labelRes: Int, val defaultPort: Int) {
+    SSH(R.string.proto_ssh, 22), TELNET(R.string.proto_telnet, 23), RAW(R.string.proto_raw, 23);
+
+    fun label(context: Context) = context.getString(labelRes)
 }
 
 /** Une session sauvegardée, à la manière des sessions PuTTY/KiTTY. */
@@ -50,7 +52,7 @@ data class Profile(
 ) {
     val summary: String
         get() = buildString {
-            append(protocol.label.lowercase()).append("  ")
+            append(protocol.name.lowercase()).append("  ")
             if (username.isNotEmpty()) append(username).append('@')
             append(host)
             if (port != protocol.defaultPort) append(':').append(port)

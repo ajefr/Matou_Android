@@ -29,10 +29,10 @@ class SessionsActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "Sessions"
+        title = getString(R.string.sessions_title)
         val root = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         empty = TextView(this).apply {
-            text = "Aucune session enregistrée.\n\nAjoutez-en une avec ＋ ou utilisez la connexion rapide ⚡."
+            text = getString(R.string.sessions_empty)
             gravity = Gravity.CENTER
             textSize = 16f
             setPadding(48, 96, 48, 48)
@@ -89,12 +89,12 @@ class SessionsActivity : Activity() {
     private fun showActions(p: Profile) {
         AlertDialog.Builder(this)
             .setTitle(p.displayName())
-            .setItems(arrayOf("Ouvrir", "Modifier", "Dupliquer", "Supprimer")) { _, which ->
+            .setItems(arrayOf(getString(R.string.action_open), getString(R.string.action_edit), getString(R.string.action_duplicate), getString(R.string.delete))) { _, which ->
                 when (which) {
                     0 -> connect(p)
                     1 -> startActivity(Intent(this, EditSessionActivity::class.java).putExtra(EditSessionActivity.EXTRA_ID, p.id))
                     2 -> {
-                        val copy = p.copy(id = java.util.UUID.randomUUID().toString(), name = p.displayName() + " (copie)", keyPath = "", lastUsed = 0)
+                        val copy = p.copy(id = java.util.UUID.randomUUID().toString(), name = getString(R.string.copy_suffix, p.displayName()), keyPath = "", lastUsed = 0)
                         // La clé est recopiée pour que chaque session garde la sienne.
                         if (p.keyPath.isNotEmpty() && java.io.File(p.keyPath).exists()) {
                             val dst = java.io.File(java.io.File(filesDir, "keys"), "${copy.id}.key")
@@ -106,9 +106,9 @@ class SessionsActivity : Activity() {
                         reload()
                     }
                     3 -> AlertDialog.Builder(this)
-                        .setTitle("Supprimer « ${p.displayName()} » ?")
-                        .setPositiveButton("Supprimer") { _, _ -> store.delete(p.id); reload() }
-                        .setNegativeButton("Annuler", null)
+                        .setTitle(getString(R.string.delete_confirm, p.displayName()))
+                        .setPositiveButton(R.string.delete) { _, _ -> store.delete(p.id); reload() }
+                        .setNegativeButton(R.string.cancel, null)
                         .show()
                 }
             }
@@ -117,7 +117,7 @@ class SessionsActivity : Activity() {
 
     private fun quickConnect() {
         val input = EditText(this).apply {
-            hint = "utilisateur@hôte:port  ou  telnet://hôte"
+            hint = getString(R.string.quick_connect_hint)
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
             isSingleLine = true
         }
@@ -127,24 +127,41 @@ class SessionsActivity : Activity() {
             addView(input, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         }
         AlertDialog.Builder(this)
-            .setTitle("Connexion rapide")
+            .setTitle(R.string.quick_connect)
             .setView(box)
-            .setPositiveButton("Connecter") { _, _ ->
+            .setPositiveButton(R.string.connect) { _, _ ->
                 val text = input.text.toString()
                 if (Profile.parseQuick(text) != null) {
                     startActivity(Intent(this, TerminalActivity::class.java).putExtra(TerminalActivity.EXTRA_QUICK, text))
                 }
             }
-            .setNegativeButton("Annuler", null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
         input.requestFocus()
     }
 
+    /** Ferme toutes les connexions, arrête le service et quitte l'application. */
+    private fun quitApp() {
+        val open = SessionManager.sessions.size
+        fun doQuit() {
+            SessionManager.closeAll(this)
+            finishAndRemoveTask()
+        }
+        if (open == 0) { doQuit(); return }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.quit_confirm_title)
+            .setMessage(getString(R.string.quit_confirm_message, open))
+            .setPositiveButton(R.string.quit) { _, _ -> doQuit() }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val open = SessionManager.sessions.size
-        if (open > 0) menu.add(0, 3, 0, "Ouvertes ($open)").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        if (open > 0) menu.add(0, 3, 0, getString(R.string.menu_open_sessions, open)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menu.add(0, 2, 1, "⚡").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menu.add(0, 1, 2, "＋").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        menu.add(0, 4, 3, getString(R.string.menu_quit)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
         return true
     }
 
@@ -153,6 +170,7 @@ class SessionsActivity : Activity() {
             1 -> startActivity(Intent(this, EditSessionActivity::class.java))
             2 -> quickConnect()
             3 -> startActivity(Intent(this, TerminalActivity::class.java))
+            4 -> quitApp()
         }
         return true
     }

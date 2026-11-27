@@ -28,7 +28,7 @@ class ExtraKeysView(
 
     /** Affiche le mode du glissement vertical : historique (↑/↓) ou défilement du terminal. */
     fun setSwipeMode(arrows: Boolean) {
-        swipeView.text = if (arrows) "⇅ Hist." else "⇅ Défil."
+        swipeView.text = context.getString(if (arrows) R.string.key_swipe_history else R.string.key_swipe_scroll)
         swipeView.setBackgroundColor(if (arrows) 0xFF3A5A40.toInt() else 0)
     }
 
@@ -61,8 +61,8 @@ class ExtraKeysView(
                 row.addView(this)
             }
         }
-        swipeView = button("⇅ Défil.", { onSwipeToggle() })
-        button("Échap", { onKey(Key.ESCAPE) })
+        swipeView = button(context.getString(R.string.key_swipe_scroll), { onSwipeToggle() })
+        button(context.getString(R.string.key_esc), { onKey(Key.ESCAPE) })
         ctrlView = button("Ctrl", { ctrl = if (ctrl == 0) 1 else 0; refresh() }, { ctrl = 2; refresh() })
         altView = button("Alt", { alt = if (alt == 0) 1 else 0; refresh() }, { alt = 2; refresh() })
         button("Tab", { onKey(Key.TAB) })
@@ -70,12 +70,12 @@ class ExtraKeysView(
         button("↓", { onKey(Key.DOWN) })
         button("↑", { onKey(Key.UP) })
         button("→", { onKey(Key.RIGHT) })
-        button("Début", { onKey(Key.HOME) })
-        button("Fin", { onKey(Key.END) })
-        button("PgPréc", { onKey(Key.PAGE_UP) })
-        button("PgSuiv", { onKey(Key.PAGE_DOWN) })
+        button(context.getString(R.string.key_home), { onKey(Key.HOME) })
+        button(context.getString(R.string.key_end), { onKey(Key.END) })
+        button(context.getString(R.string.key_pgup), { onKey(Key.PAGE_UP) })
+        button(context.getString(R.string.key_pgdn), { onKey(Key.PAGE_DOWN) })
         for (c in listOf("|", "-", "/", "~", "\\", "*", "&", ">", "<", ":")) button(c, { onText(c) })
-        button("Suppr", { onKey(Key.DELETE) })
+        button(context.getString(R.string.key_del), { onKey(Key.DELETE) })
         for (i in 1..12) button("F$i", { onKey(Key.entries[Key.F1.ordinal + i - 1]) })
         refresh()
     }

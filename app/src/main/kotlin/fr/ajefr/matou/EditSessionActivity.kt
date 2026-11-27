@@ -32,11 +32,11 @@ class EditSessionActivity : Activity() {
         JschSetup.init()
         val id = intent.getStringExtra(EXTRA_ID)
         profile = id?.let { store.get(it) } ?: Profile()
-        title = if (id == null) "Nouvelle session" else "Modifier la session"
+        title = getString(if (id == null) R.string.edit_new else R.string.edit_edit)
         keyPath = profile.keyPath
 
         val protocol = v<Spinner>(R.id.protocol)
-        protocol.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Protocol.entries.map { it.label })
+        protocol.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Protocol.entries.map { it.label(this) })
         protocol.setSelection(profile.protocol.ordinal)
         protocol.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             private var first = true
@@ -54,7 +54,7 @@ class EditSessionActivity : Activity() {
         }
 
         val theme = v<Spinner>(R.id.theme)
-        theme.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Themes.all.map { it.name })
+        theme.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Themes.all.map { it.label(this) })
         theme.setSelection(Themes.all.indexOfFirst { it.name == profile.theme }.coerceAtLeast(0))
 
         v<EditText>(R.id.name).setText(profile.name)
@@ -108,8 +108,8 @@ class EditSessionActivity : Activity() {
     private fun updateKeyStatus() {
         v<TextView>(R.id.keyStatus).text = if (keyPath.isNotEmpty() && File(keyPath).exists()) {
             val pub = File("$keyPath.pub")
-            "Clé : ${File(keyPath).name}" + if (pub.exists()) " (clé publique disponible : appui long pour copier)" else ""
-        } else "Aucune clé (OpenSSH, PEM ou PuTTY .ppk)"
+            getString(if (pub.exists()) R.string.key_set_with_pub else R.string.key_set, File(keyPath).name)
+        } else getString(R.string.key_none)
         v<TextView>(R.id.keyStatus).setOnLongClickListener {
             val pub = File("$keyPath.pub")
             if (pub.exists()) Clipboard.copy(this, pub.readText().trim())
@@ -124,7 +124,7 @@ class EditSessionActivity : Activity() {
         val uri = data?.data ?: return
         runCatching {
             val bytes = contentResolver.openInputStream(uri)!!.use { it.readBytes() }
-            if (bytes.size > 64 * 1024) throw Exception("fichier trop gros pour une clé")
+            if (bytes.size > 64 * 1024) throw Exception(getString(R.string.key_too_big))
             // Vérifie que JSch sait lire la clé avant de l'enregistrer.
             KeyPair.load(JSch(), bytes, null).dispose()
             val f = File(keyDir(), "${profile.id}.key")
@@ -132,7 +132,7 @@ class EditSessionActivity : Activity() {
             File(f.path + ".pub").delete()
             keyPath = f.absolutePath
             updateKeyStatus()
-        }.onFailure { Toast.makeText(this, "Clé illisible : ${it.message}", Toast.LENGTH_LONG).show() }
+        }.onFailure { Toast.makeText(this, getString(R.string.key_unreadable, it.message), Toast.LENGTH_LONG).show() }
     }
 
     private fun generateKey() {
@@ -148,22 +148,22 @@ class EditSessionActivity : Activity() {
             updateKeyStatus()
             val pubText = String(pub).trim()
             AlertDialog.Builder(this)
-                .setTitle("Clé ed25519 générée")
-                .setMessage("Ajoutez cette clé publique au fichier ~/.ssh/authorized_keys du serveur :\n\n$pubText")
-                .setPositiveButton("Copier") { _, _ -> Clipboard.copy(this, pubText) }
-                .setNegativeButton("Fermer", null)
+                .setTitle(R.string.key_generated_title)
+                .setMessage(getString(R.string.key_generated_message, pubText))
+                .setPositiveButton(R.string.copy) { _, _ -> Clipboard.copy(this, pubText) }
+                .setNegativeButton(R.string.close, null)
                 .show()
-        }.onFailure { Toast.makeText(this, "Échec de la génération : ${it.message}", Toast.LENGTH_LONG).show() }
+        }.onFailure { Toast.makeText(this, getString(R.string.key_generate_failed, it.message), Toast.LENGTH_LONG).show() }
     }
 
     private fun save(): Boolean {
         val host = v<EditText>(R.id.host).text.toString().trim()
-        if (host.isEmpty()) { v<EditText>(R.id.host).error = "Hôte requis"; return false }
+        if (host.isEmpty()) { v<EditText>(R.id.host).error = getString(R.string.error_host_required); return false }
         val proto = Protocol.entries[v<Spinner>(R.id.protocol).selectedItemPosition]
         val badForward = v<EditText>(R.id.forwards).text.lines()
             .firstOrNull { it.isNotBlank() && !it.trim().startsWith("#") && Forward.parse(it) == null }
         if (proto == Protocol.SSH && badForward != null) {
-            v<EditText>(R.id.forwards).error = "Ligne invalide : $badForward"
+            v<EditText>(R.id.forwards).error = getString(R.string.error_bad_forward, badForward)
             return false
         }
         profile.apply {

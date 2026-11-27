@@ -138,7 +138,7 @@ class TerminalActivity : Activity(), Prompter {
         s.profile.swipeSendsArrows = !s.profile.swipeSendsArrows
         extraKeys.setSwipeMode(s.profile.swipeSendsArrows)
         Toast.makeText(this,
-            if (s.profile.swipeSendsArrows) "Glisser : historique des commandes (↑/↓)" else "Glisser : défilement du terminal",
+            getString(if (s.profile.swipeSendsArrows) R.string.swipe_history else R.string.swipe_scroll),
             Toast.LENGTH_SHORT).show()
         saveProfileSettings(s)
     }
@@ -177,9 +177,9 @@ class TerminalActivity : Activity(), Prompter {
 
     private fun confirmClose(s: TerminalSession) {
         AlertDialog.Builder(this)
-            .setTitle("Fermer « ${s.title} » ?")
-            .setPositiveButton("Fermer") { _, _ -> SessionManager.close(this, s) }
-            .setNegativeButton("Annuler", null)
+            .setTitle(getString(R.string.close_tab_confirm, s.title))
+            .setPositiveButton(R.string.close) { _, _ -> SessionManager.close(this, s) }
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
@@ -187,16 +187,16 @@ class TerminalActivity : Activity(), Prompter {
         val s = currentSession() ?: return
         val pm = PopupMenu(this, anchor)
         val m = pm.menu
-        m.add(0, 1, 0, "Coller")
-        m.add(0, 2, 1, "Copier tout l'historique")
-        m.add(0, 3, 2, "Dupliquer la session")
-        m.add(0, 4, 3, "Reconnecter")
-        m.add(0, 5, 4, "Réinitialiser le terminal")
-        val themes = m.addSubMenu(0, 6, 5, "Thème")
-        Themes.all.forEachIndexed { i, t -> themes.add(1, 100 + i, i, t.name) }
-        m.add(0, 7, 6, "Agrandir le texte")
-        m.add(0, 8, 7, "Réduire le texte")
-        m.add(0, 9, 8, "Fermer l'onglet")
+        m.add(0, 1, 0, R.string.paste)
+        m.add(0, 2, 1, R.string.menu_copy_history)
+        m.add(0, 3, 2, R.string.menu_duplicate)
+        m.add(0, 4, 3, R.string.menu_reconnect)
+        m.add(0, 5, 4, R.string.menu_reset)
+        val themes = m.addSubMenu(0, 6, 5, R.string.menu_theme)
+        Themes.all.forEachIndexed { i, t -> themes.add(1, 100 + i, i, t.label(this)) }
+        m.add(0, 7, 6, R.string.menu_bigger)
+        m.add(0, 8, 7, R.string.menu_smaller)
+        m.add(0, 9, 8, R.string.menu_close_tab)
         pm.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 1 -> terminalView.paste()
@@ -243,18 +243,18 @@ class TerminalActivity : Activity(), Prompter {
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton("Oui") { _, _ -> done(true) }
-            .setNegativeButton("Non") { _, _ -> done(false) }
+            .setPositiveButton(R.string.yes) { _, _ -> done(true) }
+            .setNegativeButton(R.string.no) { _, _ -> done(false) }
             .setOnCancelListener { done(false) }
             .show()
     }
 
-    override fun askSecret(title: String, message: String): String? = onUi<String?>(null) { _, done ->
+    override fun askSecret(title: String, message: String, secret: Boolean): String? = onUi<String?>(null) { _, done ->
         val input = EditText(this).apply {
             inputType = InputType.TYPE_CLASS_TEXT
             isSingleLine = true
         }
-        if (title != "Utilisateur") PasswordToggle.attach(input)
+        if (secret) PasswordToggle.attach(input)
         val box = LinearLayout(this).apply {
             val pad = (20 * resources.displayMetrics.density).toInt()
             setPadding(pad, 0, pad, 0)
@@ -264,8 +264,8 @@ class TerminalActivity : Activity(), Prompter {
             .setTitle(title)
             .setMessage(message)
             .setView(box)
-            .setPositiveButton("OK") { _, _ -> done(input.text.toString()) }
-            .setNegativeButton("Annuler") { _, _ -> done(null) }
+            .setPositiveButton(R.string.ok) { _, _ -> done(input.text.toString()) }
+            .setNegativeButton(R.string.cancel) { _, _ -> done(null) }
             .setOnCancelListener { done(null) }
             .show()
         input.requestFocus()

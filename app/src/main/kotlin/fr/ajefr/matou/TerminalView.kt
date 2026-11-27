@@ -273,9 +273,9 @@ class TerminalView(context: Context) : View(context) {
         if (actionMode != null) { actionMode?.invalidateContentRect(); return }
         actionMode = startActionMode(object : ActionMode.Callback2() {
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-                if (hasSelection) menu.add(0, 1, 0, "Copier")
-                menu.add(0, 2, 1, "Coller")
-                menu.add(0, 3, 2, "Tout copier")
+                if (hasSelection) menu.add(0, 1, 0, R.string.copy)
+                menu.add(0, 2, 1, R.string.paste)
+                menu.add(0, 3, 2, R.string.copy_all)
                 return true
             }
             override fun onPrepareActionMode(mode: ActionMode, menu: Menu) = false

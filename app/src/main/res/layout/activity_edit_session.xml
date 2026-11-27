@@ -9,87 +9,87 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView style="@style/Section" android:text="Session" />
+        <TextView style="@style/Section" android:text="@string/section_session" />
 
-        <EditText android:id="@+id/name" style="@style/Field" android:hint="Nom (facultatif)" android:inputType="text" />
+        <EditText android:id="@+id/name" style="@style/Field" android:hint="@string/hint_name" android:inputType="text" />
 
         <Spinner android:id="@+id/protocol" android:layout_width="match_parent" android:layout_height="48dp" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
             <EditText android:id="@+id/host" style="@style/Field" android:layout_width="0dp" android:layout_weight="3"
-                android:hint="Hôte ou adresse IP" android:inputType="textUri" />
+                android:hint="@string/hint_host" android:inputType="textUri" />
             <EditText android:id="@+id/port" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
-                android:hint="Port" android:inputType="number" />
+                android:hint="@string/hint_port" android:inputType="number" />
         </LinearLayout>
 
-        <EditText android:id="@+id/username" style="@style/Field" android:hint="Utilisateur" android:inputType="text" />
+        <EditText android:id="@+id/username" style="@style/Field" android:hint="@string/hint_user" android:inputType="text" />
 
-        <EditText android:id="@+id/password" style="@style/Field" android:hint="Mot de passe (vide = demander)"
+        <EditText android:id="@+id/password" style="@style/Field" android:hint="@string/hint_password"
             android:inputType="textPassword" />
 
-        <TextView style="@style/Section" android:text="Clé privée (SSH)" />
+        <TextView style="@style/Section" android:text="@string/section_key" />
 
         <TextView android:id="@+id/keyStatus" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Aucune clé" android:paddingBottom="4dp" />
+            android:text="@string/key_none" android:paddingBottom="4dp" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
             <Button android:id="@+id/pickKey" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="Importer…" />
+                android:layout_height="wrap_content" android:text="@string/key_import" />
             <Button android:id="@+id/genKey" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="Générer" />
+                android:layout_height="wrap_content" android:text="@string/key_generate" />
             <Button android:id="@+id/removeKey" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="Retirer" />
+                android:layout_height="wrap_content" android:text="@string/key_remove" />
         </LinearLayout>
 
-        <EditText android:id="@+id/passphrase" style="@style/Field" android:hint="Phrase de passe (vide = demander)"
+        <EditText android:id="@+id/passphrase" style="@style/Field" android:hint="@string/hint_passphrase"
             android:inputType="textPassword" />
 
-        <TextView style="@style/Section" android:text="Automatisation" />
+        <TextView style="@style/Section" android:text="@string/section_automation" />
 
         <EditText android:id="@+id/startup" style="@style/Field" android:gravity="top"
-            android:hint="Commandes au démarrage (une par ligne)" android:inputType="textMultiLine" android:minLines="2" />
+            android:hint="@string/hint_startup" android:inputType="textMultiLine" android:minLines="2" />
 
         <LinearLayout android:id="@+id/telnetBox" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText android:id="@+id/loginPrompt" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
-                android:hint="Invite login" android:inputType="text" />
+                android:hint="@string/hint_login_prompt" android:inputType="text" />
             <EditText android:id="@+id/passwordPrompt" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
-                android:hint="Invite mot de passe" android:inputType="text" />
+                android:hint="@string/hint_password_prompt" android:inputType="text" />
         </LinearLayout>
 
-        <TextView android:id="@+id/forwardsTitle" style="@style/Section" android:text="Redirections de ports (SSH)" />
+        <TextView android:id="@+id/forwardsTitle" style="@style/Section" android:text="@string/section_forwards" />
 
         <EditText android:id="@+id/forwards" style="@style/Field" android:gravity="top" android:typeface="monospace"
-            android:hint="L 8080:localhost:80&#10;R 2222:localhost:22" android:inputType="textMultiLine" android:minLines="2" />
+            android:hint="@string/hint_forwards" android:inputType="textMultiLine" android:minLines="2" />
 
-        <TextView style="@style/Section" android:text="Terminal et connexion" />
+        <TextView style="@style/Section" android:text="@string/section_terminal" />
 
         <Spinner android:id="@+id/theme" android:layout_width="match_parent" android:layout_height="48dp" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
             <EditText android:id="@+id/termType" style="@style/Field" android:layout_width="0dp" android:layout_weight="2"
-                android:hint="Type de terminal" android:inputType="text" />
+                android:hint="@string/hint_term_type" android:inputType="text" />
             <EditText android:id="@+id/fontSize" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
-                android:hint="Police (sp)" android:inputType="numberDecimal" />
+                android:hint="@string/hint_font_size" android:inputType="numberDecimal" />
             <EditText android:id="@+id/keepAlive" style="@style/Field" android:layout_width="0dp" android:layout_weight="1"
-                android:hint="Keepalive (s)" android:inputType="number" />
+                android:hint="@string/hint_keepalive" android:inputType="number" />
         </LinearLayout>
 
         <CheckBox android:id="@+id/backspace" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Retour arrière envoie Ctrl+H (au lieu de DEL)" />
+            android:text="@string/opt_backspace" />
 
         <CheckBox android:id="@+id/swipeArrows" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Glisser le doigt parcourt l'historique des commandes (↑/↓) au lieu de faire défiler le terminal" />
+            android:text="@string/opt_swipe" />
 
         <CheckBox android:id="@+id/legacy" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Autoriser les anciens algorithmes SSH (ssh-rsa SHA-1, CBC)" />
+            android:text="@string/opt_legacy" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:paddingTop="16dp">
             <Button android:id="@+id/save" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="Enregistrer" />
+                android:layout_height="wrap_content" android:text="@string/save" />
             <Button android:id="@+id/saveConnect" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="Enregistrer et ouvrir" />
+                android:layout_height="wrap_content" android:text="@string/save_open" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
