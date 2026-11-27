@@ -17,11 +17,25 @@ android {
         versionName = "0.1.0"
     }
 
+    // Clé de release fournie par variables d'environnement (secrets GitHub en CI) ;
+    // le keystore n'est jamais versionné. Sans elles, la release est signée avec la clé de debug.
+    val releaseStore = System.getenv("MATOU_KEYSTORE_PATH")?.let { file(it) }?.takeIf { it.exists() }
+    signingConfigs {
+        if (releaseStore != null) {
+            create("release") {
+                storeFile = releaseStore
+                storeType = "pkcs12"
+                storePassword = System.getenv("MATOU_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("MATOU_KEY_ALIAS") ?: "matou"
+                keyPassword = System.getenv("MATOU_KEY_PASSWORD") ?: System.getenv("MATOU_KEYSTORE_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
-            // Signée avec la clé de debug pour pouvoir installer l'APK de test directement.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
         }
     }
 
