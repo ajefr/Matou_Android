@@ -19,6 +19,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 
 /** Écran d'accueil : la liste des sessions sauvegardées, comme la fenêtre de configuration de KiTTY. */
 class SessionsActivity : Activity() {
@@ -161,7 +162,8 @@ class SessionsActivity : Activity() {
         if (open > 0) menu.add(0, 3, 0, getString(R.string.menu_open_sessions, open)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menu.add(0, 2, 1, "⚡").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menu.add(0, 1, 2, "＋").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        menu.add(0, 4, 3, getString(R.string.menu_quit)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+        menu.add(0, 5, 3, getString(R.string.log_choose_folder)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+        menu.add(0, 4, 4, getString(R.string.menu_quit)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
         return true
     }
 
@@ -171,7 +173,22 @@ class SessionsActivity : Activity() {
             2 -> quickConnect()
             3 -> startActivity(Intent(this, TerminalActivity::class.java))
             4 -> quitApp()
+            5 -> @Suppress("DEPRECATION") startActivityForResult(LogFolder.pickIntent(), REQ_LOG_FOLDER)
         }
         return true
+    }
+
+    @Deprecated("API Activity simple, suffisante ici")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != REQ_LOG_FOLDER || resultCode != RESULT_OK) return
+        data?.data?.let { uri ->
+            runCatching { LogFolder.set(this, uri) }
+            Toast.makeText(this, getString(R.string.log_folder_is, LogFolder.describe(this)), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    companion object {
+        private const val REQ_LOG_FOLDER = 1
     }
 }

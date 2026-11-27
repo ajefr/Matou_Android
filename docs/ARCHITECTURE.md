@@ -9,6 +9,8 @@ core/                     Pure Kotlin, no Android dependency, unit-tested on the
   KeyEncoder.kt           Keys and modifiers → xterm escape sequences
   TelnetCodec.kt          Telnet option negotiation (ECHO, SGA, TTYPE, NAWS) and IAC escaping
   AutoResponder.kt        Prompt → answer rules used for Telnet auto-login
+  LogFilter.kt            Raw output → printable text for session logs (streaming UTF-8, escapes removed)
+  Scp.kt                  SCP protocol (single file, both directions) over any pair of streams
 
 app/                      The Android application
   SessionsActivity.kt     Home screen: saved sessions, quick connect
@@ -18,6 +20,8 @@ app/                      The Android application
   ExtraKeysView.kt        Esc / Ctrl / Alt / arrows / F-keys bar
   TerminalSession.kt      One connection: transport + emulator + reader thread; SessionManager
   Transport.kt            SshTransport (JSch), SocketTransport (Telnet / raw TCP)
+  FilesActivity.kt        SFTP browser and SCP fallback over the tab's SSH session
+  SessionLogger.kt        Session log files (Storage Access Framework folder or app folder)
   Profile.kt              Session model, JSON store, Keystore encryption of secrets
   ConnectionService.kt    Foreground service keeping connections alive
   Themes.kt               Color themes

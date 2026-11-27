@@ -17,6 +17,8 @@ PuTTY fork. If you know KiTTY, you will recognize saved sessions, auto-login and
 - [Startup commands](#startup-commands)
 - [Using the terminal](#using-the-terminal)
 - [Tabs and the menu](#tabs-and-the-menu)
+- [File transfer (SFTP / SCP)](#file-transfer-sftp--scp)
+- [Session logging](#session-logging)
 - [Themes and fonts](#themes-and-fonts)
 - [Background connections](#background-connections)
 - [Security notes](#security-notes)
@@ -55,6 +57,7 @@ The home screen lists your saved sessions, most recently used first.
 | Backspace sends Ctrl+H | For servers or devices that expect `^H` instead of `DEL` (`^?`). |
 | Swipe browses command history | Default [swipe mode](#swipe-mode) for this session. |
 | Legacy SSH algorithms | Enables ssh-rsa (SHA-1), DSA, CBC ciphers and SHA-1 key exchanges. |
+| Session logging | Start a log file automatically on each connection. See [Session logging](#session-logging). |
 
 ### Quick connect
 
@@ -206,7 +209,45 @@ Each connection opens in a tab at the top of the screen. The dot shows its state
 - Tap a tab to switch to it; long-press it to close it.
 - **+** opens the session list to start another connection.
 - **⋮** opens the menu: *Paste*, *Copy whole history*, *Duplicate session*, *Reconnect*, *Reset terminal*,
-  *Theme*, *Larger text* / *Smaller text*, *Close tab*.
+  *Theme*, *Larger text* / *Smaller text*, *Files (SFTP / SCP)* (SSH only), *Start logging…* /
+  *Stop logging*, *Close tab*.
+
+## File transfer (SFTP / SCP)
+
+In an SSH tab, open **⋮ › Files (SFTP / SCP)**. The file browser uses the connection that is already
+open: no second login.
+
+- The current folder is shown at the top. It starts in your home folder. Tap the path to type another one.
+- Tap a folder to open it, **..** or **⬆** to go up. Tap a file to **download** it: Android asks where to
+  save it (Downloads, Drive, a USB stick…).
+- Long-press an item for *Download*, *Rename*, *Delete* (empty folders only) and *Copy path*.
+- The menu has *Upload files…* (pick one or more files on the phone; they go to the current folder and
+  replace files with the same name), *New folder*, *Refresh*, *Go to folder* and *Show hidden files*.
+- A progress window shows each transfer. *Cancel* stops it.
+
+**SCP.** Some routers, NAS and embedded boards (often running Dropbear) have no SFTP server. When SFTP
+is refused, Matou offers SCP instead; you can also switch with **⋮ › Use SCP**. SCP cannot list
+folders, so you type the path of the file to download, or the folder to upload into (`.` is your
+home folder). The server needs the `scp` command.
+
+## Session logging
+
+Matou can write everything a session prints to a file, like PuTTY's and KiTTY's session logging.
+
+| Mode | Content |
+|---|---|
+| Printable output | Plain text: colors and other escape codes removed, CR LF turned into LF. Best for reading or searching. |
+| All session output | The raw bytes received, escape codes included. Replay it with `cat` in a terminal. |
+
+- **One-off log:** **⋮ › Start logging…** in the terminal, then pick the mode. **⋮ › Stop logging** closes the file.
+- **Always log a session:** in the session editor, under *Session logging*, pick a mode. A new file
+  starts with each connection.
+- **Where:** tap *Log folder…* (session list menu, session editor or the start dialog) to pick a folder
+  with the Android picker, for example *Documents/Matou*. Until you pick one, logs go to the app's own
+  folder `Android/data/fr.ajefr.matou/files/logs`.
+- Files are named `<session>-<yyyyMMdd-HHmmss>.log` and start with a header line giving the date and host.
+- Only what the server sends is logged. What you type appears only as the server echoes it, so
+  passwords typed at a prompt are not written (the server does not echo them).
 
 ## Themes and fonts
 
@@ -235,6 +276,8 @@ connections drop when the screen is off, exempt Matou from battery optimization 
   backups are disabled for the app.
 - Host keys are always verified. Only accept an unknown key if you can check its fingerprint.
 - The *legacy algorithms* option weakens security: enable it only for devices that need it.
+- Session logs can contain sensitive output (configuration files, tokens printed by commands). Pick a
+  log folder that other apps cannot read if this matters, and delete logs you no longer need.
 
 ## Troubleshooting
 

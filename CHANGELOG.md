@@ -6,6 +6,16 @@ All notable changes to Matou are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-27
+
+### Added
+- **File transfer** in SSH tabs (⋮ › Files): SFTP browser over the open connection to download,
+  upload (several files at once), rename, delete and create folders, with progress and cancel.
+  SCP fallback for servers without SFTP (routers, Dropbear)
+- **Session logging** to a file, like PuTTY / KiTTY: printable text (escape codes removed) or raw
+  output; started from the terminal menu or automatically for a session; log folder picked with the
+  Android folder picker
+
 ## [0.1.1] - 2026-11-27
 
 ### Added
@@ -35,5 +45,6 @@ First prototype (not published as a release; included in 0.1.1).
 
 
 
-[Unreleased]: https://github.com/ajefr/Matou_Android/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/ajefr/Matou_Android/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ajefr/Matou_Android/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/ajefr/Matou_Android/releases/tag/v0.1.1

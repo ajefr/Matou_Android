@@ -122,4 +122,59 @@
         <item quantity="other">%1$d sessions ouvertes</item>
     </plurals>
     <string name="notif_quit">Quitter</string>
+
+    <!-- Transfert de fichiers -->
+    <string name="menu_files">Fichiers (SFTP / SCP)</string>
+    <string name="files_title">Fichiers : %1$s</string>
+    <string name="files_not_connected">Connectez d\'abord la session SSH.</string>
+    <string name="files_loading">Chargement…</string>
+    <string name="files_empty">Dossier vide</string>
+    <string name="files_error">Erreur : %1$s</string>
+    <string name="files_open">Ouvrir</string>
+    <string name="files_download">Télécharger</string>
+    <string name="files_upload">Envoyer des fichiers…</string>
+    <string name="files_rename">Renommer</string>
+    <string name="files_copy_path">Copier le chemin</string>
+    <string name="files_new_folder">Nouveau dossier</string>
+    <string name="files_refresh">Actualiser</string>
+    <string name="files_go_to">Aller au dossier</string>
+    <string name="files_show_hidden">Afficher les fichiers cachés</string>
+    <string name="files_delete_dir_note">Seuls les dossiers vides peuvent être supprimés.</string>
+    <string name="files_downloading">Téléchargement de %1$s</string>
+    <string name="files_downloaded">%1$s téléchargé</string>
+    <plurals name="files_uploading">
+        <item quantity="one">Envoi de %1$d fichier</item>
+        <item quantity="many">Envoi de %1$d fichiers</item>
+        <item quantity="other">Envoi de %1$d fichiers</item>
+    </plurals>
+    <plurals name="files_uploaded">
+        <item quantity="one">%1$d fichier envoyé</item>
+        <item quantity="many">%1$d fichiers envoyés</item>
+        <item quantity="other">%1$d fichiers envoyés</item>
+    </plurals>
+    <string name="files_cancelled">Transfert annulé</string>
+    <string name="sftp_unavailable_title">SFTP indisponible</string>
+    <string name="sftp_unavailable_message">Le serveur refuse SFTP (%1$s). Beaucoup de routeurs et de petits appareils ne gèrent que SCP.</string>
+    <string name="scp_use">Utiliser SCP</string>
+    <string name="scp_mode">Mode SCP</string>
+    <string name="scp_explain">SCP ne sait pas lister les dossiers : saisissez le chemin du fichier à télécharger, ou le dossier où envoyer.</string>
+    <string name="scp_download">Télécharger un fichier…</string>
+    <string name="scp_upload">Envoyer des fichiers…</string>
+    <string name="scp_remote_file">Chemin du fichier distant</string>
+    <string name="scp_remote_dir">Dossier distant (. = dossier personnel)</string>
+
+    <!-- Journal de session -->
+    <string name="section_logging">Journal de session</string>
+    <string name="log_mode_off">Pas de journal</string>
+    <string name="log_mode_text">Texte lisible (sans codes d\'échappement)</string>
+    <string name="log_mode_raw">Toute la sortie de la session (brute)</string>
+    <string name="log_choose_folder">Dossier des journaux…</string>
+    <string name="log_folder_is">Dossier des journaux : %1$s</string>
+    <string name="menu_log_start">Démarrer le journal…</string>
+    <string name="menu_log_stop">Arrêter le journal</string>
+    <string name="log_start_title">Journal dans %1$s</string>
+    <string name="log_started">Journal : %1$s (%2$s)</string>
+    <string name="log_stopped">Journal arrêté : %1$s</string>
+    <string name="log_failed">Échec du journal : %1$s</string>
+    <string name="log_create_failed">impossible de créer le fichier journal</string>
 </resources>

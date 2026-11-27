@@ -86,6 +86,7 @@ class TerminalSession(private val context: Context, val profile: Profile) {
             if (!live(g)) return
             transport = t
             state = State.CONNECTED
+            if (p.logMode != SessionLogger.MODE_OFF && logger == null) startLogging(p.logMode)
             postUpdate()
             if (widthPx > 0) writer.execute { runCatching { t.resize(cols, rows, widthPx, heightPx) } }
             t.banner.forEach { show("\u001b[36m$it\u001b[0m\r\n") }
@@ -101,6 +102,39 @@ class TerminalSession(private val context: Context, val profile: Profile) {
     }
 
     private var responder: AutoResponder? = null
+
+    /** Journal de session en cours (null = pas de journalisation). */
+    @Volatile var logger: SessionLogger? = null; private set
+
+    /** Démarre la journalisation ; renvoie le message à afficher (succès ou erreur). */
+    fun startLogging(mode: Int): String {
+        stopLogging()
+        return try {
+            val l = SessionLogger.open(context, profile, mode)
+            logger = l
+            context.getString(R.string.log_started, l.fileName, l.location)
+        } catch (e: Throwable) {
+            context.getString(R.string.log_failed, e.message ?: e.javaClass.simpleName)
+        }.also { show("\u001b[2m$it\u001b[0m\r\n") }
+    }
+
+    fun stopLogging() {
+        val l = logger ?: return
+        logger = null
+        l.close()
+        show("\u001b[2m" + context.getString(R.string.log_stopped, l.fileName) + "\u001b[0m\r\n")
+    }
+
+    private fun logChunk(buf: ByteArray, n: Int) {
+        val l = logger ?: return
+        l.write(buf, 0, n)
+        l.flush()
+        l.failed?.let { e ->
+            logger = null
+            l.close()
+            show("\r\n\u001b[31m" + context.getString(R.string.log_failed, e.message ?: e.javaClass.simpleName) + "\u001b[0m\r\n")
+        }
+    }
 
     private fun setupAutomation() {
         val p = profile
@@ -141,6 +175,7 @@ class TerminalSession(private val context: Context, val profile: Profile) {
                 r.onText(chars.toString())
             }
             synchronized(terminal) { terminal.feed(buf, 0, n) }
+            logChunk(buf, n)
             postUpdate()
         }
     }
@@ -183,8 +218,13 @@ class TerminalSession(private val context: Context, val profile: Profile) {
         main.postDelayed({ if (!closed) start() }, 300)
     }
 
+    /** Session SSH connectée, pour le transfert de fichiers (null si non connecté ou pas en SSH). */
+    fun sshSession(): com.jcraft.jsch.Session? =
+        (transport as? SshTransport)?.session?.takeIf { it.isConnected && state == State.CONNECTED }
+
     fun close() {
         closed = true
+        logger?.let { logger = null; it.close() }
         state = State.DISCONNECTED
         transport?.let { t -> writer.execute { t.close() } }
         writer.shutdown()
