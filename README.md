@@ -5,12 +5,12 @@
 <h1 align="center">Matou</h1>
 
 <p align="center">
-  <b>An SSH, Telnet and raw TCP client for Android, in the spirit of KiTTY / PuTTY.</b><br>
+  <b>An SSH, Telnet and raw TCP client for Android, inspired by <a href="https://github.com/cyd01/KiTTY">KiTTY</a>.</b><br>
   Saved sessions · key authentication (OpenSSH &amp; PuTTY <code>.ppk</code>) · port forwarding · auto-login · a real xterm emulator
 </p>
 
 <p align="center">
-  <a href="https://github.com/ajefr/Kitty_android/actions/workflows/build.yml"><img src="https://github.com/ajefr/Kitty_android/actions/workflows/build.yml/badge.svg" alt="Build"></a>
+  <a href="https://github.com/ajefr/Matou_Android/actions/workflows/build.yml"><img src="https://github.com/ajefr/Matou_Android/actions/workflows/build.yml/badge.svg" alt="Build"></a>
   <img src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 8.0+">
   <img src="https://img.shields.io/badge/Kotlin-2.0-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
@@ -20,13 +20,18 @@
 
 ---
 
-If you've ever used **PuTTY** or **KiTTY** on Windows to manage a fleet of servers, routers and
-embedded boards, Matou brings that workflow to your phone: a list of saved sessions you tap to
+Matou is **inspired by [KiTTY](https://github.com/cyd01/KiTTY)**, the popular Windows fork of
+[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) that adds session management,
+auto-login and automatic commands. If you've ever used PuTTY or KiTTY to manage a fleet of servers,
+routers and embedded boards, Matou brings that workflow to your phone: a list of saved sessions you tap to
 connect, credentials and keys stored safely, commands sent automatically on login, and a terminal
 that renders `vim`, `htop`, `tmux` and `mc` correctly.
 
-> **Status:** early prototype (v0.1). Matou is an independent project and is not affiliated with
-> PuTTY or KiTTY.
+> **Status:** early prototype (v0.1).
+>
+> **Independent project.** Matou takes its ideas from KiTTY, but it is a separate application
+> written from scratch in Kotlin. It shares no code with KiTTY or PuTTY and is not affiliated with,
+> endorsed by or supported by their authors. Please report Matou issues here, not to them.
 
 ## Features
 
@@ -65,8 +70,8 @@ that renders `vim`, `htop`, `tmux` and `mc` correctly.
 
 ## Install
 
-1. Download the latest **`matou-release-apk`** from the [Releases](https://github.com/ajefr/Kitty_android/releases)
-   page, or from the artifacts of the latest successful [build](https://github.com/ajefr/Kitty_android/actions/workflows/build.yml).
+1. Download the latest **`matou-release-apk`** from the [Releases](https://github.com/ajefr/Matou_Android/releases)
+   page, or from the artifacts of the latest successful [build](https://github.com/ajefr/Matou_Android/actions/workflows/build.yml).
 2. On your phone, allow installing apps from your browser or file manager
    (*Settings → Apps → Special access → Install unknown apps*).
 3. Open the APK and install it.
@@ -108,7 +113,7 @@ See the **[User guide](docs/USER_GUIDE.md)** for keys, port forwarding, Telnet a
 
 - [JSch (mwiede fork)](https://github.com/mwiede/jsch), the SSH implementation (BSD-style license)
 - [Bouncy Castle](https://www.bouncycastle.org/), cryptography for Ed25519, X25519, ML-KEM and Argon2 (MIT-style license)
-- [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) and [KiTTY](https://github.com/cyd01/KiTTY), the inspiration
+- [KiTTY](https://github.com/cyd01/KiTTY) by cyd01 and [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) by Simon Tatham, the inspiration for Matou's features and workflow
 
 ## License
 

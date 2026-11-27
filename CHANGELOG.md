@@ -24,5 +24,7 @@ First prototype.
 - Foreground service keeping connections alive in the background
 - Signed release builds and GitHub Actions CI producing debug and release APKs
 
-[Unreleased]: https://github.com/ajefr/Kitty_android/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/ajefr/Kitty_android/releases/tag/v0.1.0
+
+
+[Unreleased]: https://github.com/ajefr/Matou_Android/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ajefr/Matou_Android/releases/tag/v0.1.0
