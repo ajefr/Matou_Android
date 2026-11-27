@@ -13,8 +13,8 @@ android {
         applicationId = "fr.ajefr.matou"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
     }
 
     // Clé de release fournie par variables d'environnement (secrets GitHub en CI) ;
@@ -44,6 +44,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
+
     packaging {
         resources.excludes += setOf("META-INF/versions/*/OSGI-INF/MANIFEST.MF", "META-INF/*.md")
     }
@@ -59,4 +63,8 @@ dependencies {
     implementation("com.github.mwiede:jsch:2.27.9")
     // Fournit Ed25519/X25519 et Argon2 (clés .ppk v3) sur les anciennes versions d'Android
     implementation("org.bouncycastle:bcprov-jdk18on:1.80")
+
+    // Captures d'écran générées sans appareil (rendu natif Robolectric) : ./gradlew :app:testDebugUnitTest
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.14.1")
 }

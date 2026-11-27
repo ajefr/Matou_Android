@@ -4,8 +4,9 @@ Matou is an Android SSH / Telnet client inspired by [KiTTY](https://github.com/c
 PuTTY fork. If you know KiTTY, you will recognize saved sessions, auto-login and startup commands
 (KiTTY's *autocommand*). Matou is an independent project, not affiliated with KiTTY or PuTTY.
 
-> The app's interface is currently in French. This guide quotes the labels as they appear on screen,
-> with their meaning in English (an English translation of the interface is planned).
+> The interface is available in English and French and follows your phone's language
+> (Android 13 and later can also set a language for Matou alone in *Settings › Apps › Matou › Language*).
+> This guide quotes the English labels.
 
 - [Sessions](#sessions)
 - [SSH authentication](#ssh-authentication)
@@ -31,7 +32,8 @@ The home screen lists your saved sessions, most recently used first.
 | Edit, duplicate, delete | Long-press a session |
 | New session | **＋** in the toolbar |
 | One-off connection | **⚡** in the toolbar |
-| Back to open sessions | **Ouvertes (n)** (open) in the toolbar |
+| Back to open sessions | **Open (n)** in the toolbar |
+| Quit Matou | **⋮ › Quit**: closes every connection and exits the app (asks first if sessions are open) |
 
 ### Session fields
 
@@ -80,16 +82,16 @@ Matou tries, in order: **public key** (if a key is set), **keyboard-interactive*
 
 ## Private keys
 
-In the session editor, under **Clé privée (SSH)** (private key):
+In the session editor, under **Private key (SSH)**:
 
-- **Importer…** (import) picks a key file from your phone (Downloads, Drive, USB…). Supported formats:
+- **Import…** picks a key file from your phone (Downloads, Drive, USB…). Supported formats:
   - OpenSSH (`-----BEGIN OPENSSH PRIVATE KEY-----`): ed25519, ECDSA, RSA
   - PEM / PKCS#1 / PKCS#8 (`-----BEGIN RSA PRIVATE KEY-----`, …)
   - **PuTTY `.ppk`** versions 2 and 3, so the keys you already use with PuTTY or KiTTY work as they are
   - Encrypted keys: enter the passphrase in the session, or leave it empty to be asked
-- **Générer** (generate) creates a new **ed25519** key pair. The public key is shown so you can copy it.
+- **Generate** creates a new **ed25519** key pair. The public key is shown so you can copy it.
   Long-press the key line later to copy the public key again.
-- **Retirer** (remove) detaches the key from the session.
+- **Remove** detaches the key from the session.
 
 The key is copied into the app's private storage, so you can delete the original file afterwards.
 Other apps cannot read it.
@@ -109,7 +111,7 @@ a warning and can refuse the connection: do so unless you know the server was re
 
 ## Port forwarding
 
-Add one rule per line in **Redirections de ports** (port forwarding). Lines starting with `#` are ignored.
+Add one rule per line in **Port forwarding (SSH)**. Lines starting with `#` are ignored.
 
 | Rule | Meaning |
 |---|---|
@@ -141,7 +143,7 @@ servers (ser2net), MUDs, or debugging text protocols.
 
 ## Startup commands
 
-Commands listed in **Commandes au démarrage** (startup commands) are sent one per line once the connection is ready (after
+Commands listed in **Startup commands** are sent one per line once the connection is ready (after
 auto-login for Telnet). Examples:
 
 ```
@@ -159,7 +161,7 @@ sudo -i
 | Tap | Show the keyboard. In mouse-aware apps (htop, mc, tmux), also sends a click. |
 | Swipe up / down | Depends on the swipe mode (see below). In full-screen apps (less, man, vim), always sends arrow keys. In mouse-aware apps, sends wheel events. |
 | Pinch | Change the font size (saved in the session). |
-| Long-press, then drag | Select text. Release to get **Copier / Coller / Tout copier** (copy / paste / copy all). |
+| Long-press, then drag | Select text. Release to get **Copy / Paste / Copy all**. |
 | Tap during a selection | Cancel it. |
 
 ### Swipe mode
@@ -168,21 +170,20 @@ Vertical swipes on the shell prompt can do one of two things:
 
 | Mode | Button label | Swipe down | Swipe up |
 |---|---|---|---|
-| Scroll (default) | **⇅ Défil.** | Scroll back through the terminal output | Scroll forward |
+| Scroll (default) | **⇅ Scroll** | Scroll back through the terminal output | Scroll forward |
 | History | **⇅ Hist.** (green) | ↑: previous command in the shell history | ↓: next command |
 
 Tap the **⇅** button at the start of the extra keys bar to switch modes. The choice is saved in the
-session; you can also set it in the session editor (*Glisser le doigt parcourt l'historique des
-commandes*).
+session; you can also set it in the session editor (*Swiping browses the command history*).
 
 ### Extra keys bar
 
 | Key | Behavior |
 |---|---|
 | **Ctrl**, **Alt** | Tap: applies to the next key only (highlighted). Long-press: locked (orange) until tapped again. |
-| **⇅ Défil. / ⇅ Hist.** | Switch the [swipe mode](#swipe-mode) |
-| **Échap** | Esc |
-| **Tab**, arrows, **Début** / **Fin**, **PgPréc** / **PgSuiv**, **Suppr** | Tab, arrows, Home / End, Page Up / Down, Delete |
+| **⇅ Scroll / ⇅ Hist.** | Switch the [swipe mode](#swipe-mode) |
+| **Esc** | Escape |
+| **Tab**, arrows, **Home** / **End**, **PgUp** / **PgDn**, **Del** | Tab, arrows, Home / End, Page Up / Down, Delete |
 | `\| - / ~ \ * & > < :` | Symbols that are awkward to reach on touch keyboards |
 | **F1** … **F12** | Function keys (scroll the bar to the right) |
 
@@ -204,9 +205,8 @@ Each connection opens in a tab at the top of the screen. The dot shows its state
 
 - Tap a tab to switch to it; long-press it to close it.
 - **+** opens the session list to start another connection.
-- **⋮** opens the menu: *Coller* (paste), *Copier tout l'historique* (copy whole history),
-  *Dupliquer la session* (duplicate), *Reconnecter*, *Réinitialiser le terminal* (reset),
-  *Thème*, *Agrandir / Réduire le texte* (larger / smaller text), *Fermer l'onglet* (close tab).
+- **⋮** opens the menu: *Paste*, *Copy whole history*, *Duplicate session*, *Reconnect*, *Reset terminal*,
+  *Theme*, *Larger text* / *Smaller text*, *Close tab*.
 
 ## Themes and fonts
 
@@ -215,13 +215,14 @@ Gruvbox, Nord and Green phosphor. Pick one in the session editor or from the **�
 choice is saved in the session.
 
 Programs can change colors at run time (OSC 4/10/11), for example base16 shell scripts.
-*Réinitialiser le terminal* (reset) restores the theme.
+*Reset terminal* restores the theme.
 
 ## Background connections
 
 While at least one session is open, Matou shows a persistent notification and runs a foreground
 service so that Android does not close the connections. On Android 13 and later, allow
-notifications when asked so the notification can be shown.
+notifications when asked so the notification can be shown. The notification's **Quit** action
+closes every connection and stops the service, like **⋮ › Quit** in the session list.
 
 Some manufacturers (Xiaomi, Huawei, Samsung…) still kill background apps aggressively. If
 connections drop when the screen is off, exempt Matou from battery optimization in the system settings.
@@ -239,11 +240,11 @@ connections drop when the screen is off, exempt Matou from battery optimization 
 
 | Symptom | Fix |
 |---|---|
-| `Algorithm negotiation fail` | The server only supports old algorithms. Enable **Autoriser les anciens algorithmes SSH** (legacy algorithms). |
+| `Algorithm negotiation fail` | The server only supports old algorithms. Enable **Allow legacy SSH algorithms**. |
 | `Auth fail` | Wrong password or key, or the key is not in `authorized_keys`. Check the server logs (`/var/log/auth.log`). |
 | `UnknownHostKey` / `reject HostKey` | You refused the host key, or it changed. Accept it if you trust the server. |
-| Backspace prints `^?` or `^H` | Toggle **Retour arrière envoie Ctrl+H** (backspace sends Ctrl+H) in the session. |
-| Colors look wrong or the layout is broken | Set **Type de terminal** (terminal type) to `xterm-256color`, or `xterm` / `vt100` on very old systems. |
+| Backspace prints `^?` or `^H` | Toggle **Backspace sends Ctrl+H** in the session. |
+| Colors look wrong or the layout is broken | Set **Terminal type** to `xterm-256color`, or `xterm` / `vt100` on very old systems. |
 | Lines are cut or wrap badly after a rotation | Most programs redraw on resize. Press Ctrl+L or run `reset`. |
 | Telnet auto-login does nothing | Adjust the login and password prompt texts to match what the device prints. |
 | The connection drops in the background | See [Background connections](#background-connections), and set a keep-alive (for example 30 s). |

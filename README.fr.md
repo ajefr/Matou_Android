@@ -9,6 +9,14 @@ des sessions sauvegardées, de l'auto-login, des commandes au démarrage et un v
 > projet indépendant écrit de zéro en Kotlin : il ne partage aucun code avec KiTTY ni PuTTY et n'est
 > ni affilié ni soutenu par leurs auteurs.
 
+## Captures d'écran
+
+<p align="center">
+  <img src="docs/screenshots/01-sessions.png" width="200" alt="Sessions enregistrées">
+  <img src="docs/screenshots/02-terminal.png" width="200" alt="Terminal en couleurs avec onglets">
+  <img src="docs/screenshots/06-editor-fr.png" width="200" alt="Éditeur de session en français">
+</p>
+
 ## Fonctionnalités
 
 **Sessions**
@@ -16,6 +24,7 @@ des sessions sauvegardées, de l'auto-login, des commandes au démarrage et un v
 - Connexion rapide : `utilisateur@hôte:port`, `ssh://…`, `telnet://…`, `raw://…`
 - Dupliquer / modifier / supprimer une session, dupliquer une session ouverte dans un nouvel onglet
 - Mots de passe et phrases de passe chiffrés avec le Keystore Android (AES-GCM)
+- Bouton **Quitter** dans la liste des sessions et dans la notification : ferme toutes les connexions
 
 **Protocoles**
 - SSH (via [JSch, fork mwiede](https://github.com/mwiede/jsch)) : mot de passe, keyboard-interactive, clé privée
@@ -38,6 +47,7 @@ des sessions sauvegardées, de l'auto-login, des commandes au démarrage et un v
   PgPréc/PgSuiv, F1-F12, symboles
 - Onglets (appui long pour fermer), 8 thèmes (dont « PuTTY classique »), taille de police par session
 - Service de premier plan qui garde les connexions ouvertes en arrière-plan
+- Interface en **français et en anglais**, selon la langue du téléphone
 
 ## Compiler
 

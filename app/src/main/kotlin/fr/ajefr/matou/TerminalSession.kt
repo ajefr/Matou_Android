@@ -75,7 +75,7 @@ class TerminalSession(private val context: Context, val profile: Profile) {
 
     private fun run(g: Int) {
         val p = profile
-        show("\u001b[2m${p.protocol.label} : connexion à ${p.host}:${p.port}…\u001b[0m\r\n")
+        show("\u001b[2m" + context.getString(R.string.term_connecting, p.protocol.label(context), p.host, p.port) + "\u001b[0m\r\n")
         val t: Transport = when (p.protocol) {
             Protocol.SSH -> SshTransport(context, p, SessionManager.prompter)
             Protocol.TELNET -> SocketTransport(p, telnet = true)
@@ -91,7 +91,7 @@ class TerminalSession(private val context: Context, val profile: Profile) {
             t.banner.forEach { show("\u001b[36m$it\u001b[0m\r\n") }
             setupAutomation()
             readLoop(t, g)
-            if (live(g)) disconnected("connexion fermée par l'hôte")
+            if (live(g)) disconnected(context.getString(R.string.term_closed_by_host))
         } catch (e: Throwable) {
             if (live(g)) disconnected(e.message ?: e.javaClass.simpleName)
         } finally {
@@ -147,7 +147,8 @@ class TerminalSession(private val context: Context, val profile: Profile) {
 
     private fun disconnected(reason: String) {
         state = State.DISCONNECTED
-        show("\r\n\u001b[0;1;31m[Déconnecté : $reason]\u001b[0m\r\n\u001b[2mEntrée pour se reconnecter.\u001b[0m\r\n")
+        show("\r\n\u001b[0;1;31m" + context.getString(R.string.term_disconnected, reason) + "\u001b[0m\r\n\u001b[2m" +
+            context.getString(R.string.term_press_enter) + "\u001b[0m\r\n")
     }
 
     /** Saisie de l'utilisateur. En état déconnecté, Entrée relance la connexion. */
@@ -203,7 +204,7 @@ object SessionManager {
     /** Remplacé par l'activité terminal quand elle est visible. */
     var prompter: Prompter = object : Prompter {
         override fun confirm(title: String, message: String) = false
-        override fun askSecret(title: String, message: String): String? = null
+        override fun askSecret(title: String, message: String, secret: Boolean): String? = null
         override fun info(message: String) {}
     }
 
@@ -226,6 +227,15 @@ object SessionManager {
         val i = sessions.indexOf(s)
         sessions.remove(s)
         if (current >= sessions.size || (i in 0 until current)) current = maxOf(0, current - 1)
+        updateService(context)
+        notifyChanged()
+    }
+
+    /** Ferme toutes les sessions (bouton « Quitter »). */
+    fun closeAll(context: Context) {
+        sessions.toList().forEach { it.close() }
+        sessions.clear()
+        current = 0
         updateService(context)
         notifyChanged()
     }

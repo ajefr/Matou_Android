@@ -33,6 +33,18 @@ They cover the VT parser (cursor movement, erase, scroll regions, SGR colors, al
 wide characters, DEC line drawing, OSC, device reports), key encoding, mouse reporting, the Telnet
 codec and auto-login.
 
+## Screenshots
+
+The images in `docs/screenshots/` are rendered without a device or emulator, by a Robolectric test
+that uses Android's native graphics on the JVM:
+
+```sh
+MATOU_SCREENSHOTS=$PWD/docs/screenshots ./gradlew :app:testDebugUnitTest
+```
+
+Without `MATOU_SCREENSHOTS` the test is skipped. The first run downloads the Android runtime used by
+Robolectric (about 150 MB).
+
 ## Release signing
 
 Release builds are signed with a key given through environment variables. The keystore is

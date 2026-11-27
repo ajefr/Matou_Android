@@ -9,7 +9,7 @@ object Clipboard {
     fun copy(context: Context, text: String) {
         if (text.isEmpty()) return
         context.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Matou", text))
-        Toast.makeText(context, "Copié", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.copied), Toast.LENGTH_SHORT).show()
     }
 
     fun get(context: Context): String? =
